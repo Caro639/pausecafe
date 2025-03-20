@@ -26,7 +26,8 @@
         {{ form_row(registrationForm.city) }}
         </fieldset>
         {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
+            label: 'Mot de passe',
+            help: 'Votre mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.'
         }) }}
         {{ form_row(registrationForm.RGPDConsent) }}
 

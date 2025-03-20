@@ -23,31 +23,37 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control'
                 ],
+                'label' => 'E-mail',
             ])
             ->add('lastname', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ],
+                'label' => 'Nom',
             ])
             ->add('firstname', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ],
+                'label' => 'Prénom',
             ])
             ->add('address', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ],
+                'label' => 'Adresse',
             ])
             ->add('zipcode', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ],
+                'label' => 'Code postal',
             ])
             ->add('city', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ],
+                'label' => 'Ville',
             ])
             ->add('RGPDConsent', CheckboxType::class, [
                 'mapped' => false,
@@ -55,6 +61,10 @@ class RegistrationFormType extends AbstractType
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
                     ]),
+                ],
+                'label' => 'J\'accepte les conditions d\'utilisation',
+                'attr' => [
+                    'class' => 'form-check-input'
                 ],
             ])
             ->add('plainPassword', PasswordType::class, [
