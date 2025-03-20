@@ -9,10 +9,10 @@
         <meta name="author" content="" /> #}
 
         {% block stylesheets %}
-        {# {{ encore_entry_link_tags('app')}} #}
+    
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-         {# <link href="{{ asset('styles/home/styles.css') }}" rel="stylesheet"/> #}
+
         {% endblock %}
 
         {% block javascripts %}
@@ -21,16 +21,20 @@
 
         {% endblock %}
     </head>
-    <body>
-       {# {% block header %} #}
-      
-            {# {% include ('partials/_nav.html.twig') %} #}
-        {# {% endblock %} #}
-        {% block body %}
-
-        {% endblock %}
-   {# :    {% block footer %}
-        {% include ('partials/_footer.html.twig') %}
+    <body>      
+        {# {% block header %}
+        <header>
+                 {{ include ('partials/_nav.html.twig') }}
+        </header>
         {% endblock %} #}
+        {% block body %}
+   
+        {% endblock %}
+        {# {% block footer %}
+            <footer>
+                {{ include ('partials/_footer.html.twig') }}
+            </footer>
+            {% endblock %} #}
+
     </body>
 </html>

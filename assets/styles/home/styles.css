@@ -11,6 +11,11 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 :root {
+  --bs-warning-text-emphasis: #664d03;
+  --bs-warning-bg-emphasis: #fff3cd;
+  --bs-warning-border-emphasis: #ffeeba;
+  --bs-danger-text-emphasis: #842029;
+  --bs-danger-bg-emphasis: #f8d7da;
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
   --bs-purple: #6f42c1;
