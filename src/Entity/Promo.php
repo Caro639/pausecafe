@@ -2,15 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\PromoRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PromoRepository;
+use App\Entity\Trait\CreatedAtTrait;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: PromoRepository::class)]
 class Promo
 {
+    use CreatedAtTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -34,9 +37,6 @@ class Promo
     #[ORM\Column]
     private ?bool $is_valid = null;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, options: ['default' => 'CURRENT_TIMESTAMP'])]
-    private ?\DateTimeImmutable $created_at = null;
-
     #[ORM\ManyToOne(inversedBy: 'promos')]
     #[ORM\JoinColumn(nullable: false)]
     private ?CouponsTypes $coupons_types = null;
@@ -50,6 +50,7 @@ class Promo
     public function __construct()
     {
         $this->orders = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -129,17 +130,6 @@ class Promo
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
-    {
-        $this->created_at = $created_at;
-
-        return $this;
-    }
 
     public function getCouponsTypes(): ?CouponsTypes
     {
