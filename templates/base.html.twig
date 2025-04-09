@@ -23,19 +23,24 @@
         {% endblock %}
     </head>
     <body>      
-        {# {% block header %}
-        <header>
-                 {{ include ('partials/_nav.html.twig') }}
-        </header>
-        {% endblock %} #}
+        {{ include ('partials/_nav.html.twig') }}
+
+    
+        {% if app.user and app.user.isVerified == false %}
+
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="alert-message">
+                    <strong>Bonjour ! Votre compte n'est pas activé</strong>, renvoyer le lien d'activation.
+                </div>
+            </div>
+        {% endif %}
+
         {% block body %}
-   
+
         {% endblock %}
-        {# {% block footer %}
-            <footer>
-                {{ include ('partials/_footer.html.twig') }}
-            </footer>
-            {% endblock %} #}
+     
+        {{ include ('partials/_footer.html.twig') }}
 
     </body>
 </html>
