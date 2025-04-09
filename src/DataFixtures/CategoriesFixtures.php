@@ -36,7 +36,7 @@ class CategoriesFixtures extends Fixture
         $manager->flush();
     }
 
-    public function createCategory(string $name, ?Categories $parent = null, ObjectManager $manager): Categories
+    public function createCategory(ObjectManager $manager, string $name, ?Categories $parent = null): Categories
     {
         $category = new Categories();
         $category->setName($name);
