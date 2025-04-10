@@ -16,9 +16,11 @@ Symfony CLI [CLI](https://symfony.com/download)
 
 Bibliotheque de fausses donnees faker [Faker](https://fakerphp.github.io/)
 
-Systeme d'Upload Files via Symfony 6 documentation [Upload Files](https://symfony.com/doc/current/controller/upload_file.html)
+Envoi de mail Test avec [Mailtrap](https://mailtrap.io/)
 
-Formulaire de contact Envoi de mail Test avec [Mailtrap](https://mailtrap.io/)
+Vérification utilisateur json token JWT [JWT](https://jwt.io/)
+
+Systeme d'Upload Files via Symfony 6 documentation [Upload Files](https://symfony.com/doc/current/controller/upload_file.html)
 
 ## Extensions VS Code
 
