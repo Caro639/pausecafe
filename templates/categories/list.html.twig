@@ -1,15 +1,7 @@
 {% extends 'base.html.twig' %} {% block title
 %}Catégories{% endblock %} 
 {% block body %} 
-    <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">PauseCafé</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">Les meilleurs cafés du monde</p>
-                </div>
-            </div>
-        </header>
-         <h1>Liste des produits de la catégorie {{ category.name }}</h1>
+         <h2>Liste des produits de la catégorie {{ category.name }}</h2>
 
   <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
@@ -32,7 +24,8 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View details</a></div>
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ path('products_details', 
+                                {'slug': product.slug }) }}">View details</a></div>
                             </div>
                         </div>
                     </div>
