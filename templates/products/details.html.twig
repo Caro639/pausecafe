@@ -7,16 +7,36 @@
   <h2>{{ product.name }}</h2>
   <div class="container px-4 px-lg-5 mt-5">
     <div
-      class="card mb-3"
-      style="max-width: 540px"
+      class="card mb-8 mb-lg-0"
+      style="max-width: 1200px"
     >
       <div class="row g-0">
         <div class="col-md-4">
-          <img
-            src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-            class="img-fluid rounded-start"
-            alt="photo du café"
-          />
+          <div id="carouselExampleIndicators" class="carousel slide">
+  <div class="carousel-indicators">
+  {% for iteration in 1..product.images|length %}
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ iteration - 1 }}" 
+    {{ (loop.first) ? 'class="active" aria-current="true"' : ''}}  aria-label="Slide {{ iteration }}"></button>
+  {% endfor %}
+  </div>
+  <div class="carousel-inner">      
+  {% for image in product.images %}
+            <div class="carousel-item {{ (loop.first) ? 'active' : '' }}">
+              <img src="{{ asset('assets/images/') ~ image.name }}"
+                    class="img-fluid rounded-start"
+                    alt="{{ product.name}}">
+              </div>
+          {% endfor %}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
         </div>
         <div class="col-md-8">
           <div class="card-body">
@@ -33,23 +53,23 @@
               a little bit longer.
             </p>
             <p class="card-text">
-              Prix : {{ product.price }} €
-            </p>
-            <p class="card-text">
-              <small class="text-body-secondary"
-                >Last updated 3 mins ago</small
-              >
+              Prix : {{ product.price / 100 }} €
             </p>
             <div
               class="card-footer p-4 pt-0 border-top-0 bg-transparent"
             >
+            {% if product.stock > 0 %}
               <div class="text-center">
                 <a
                   class="btn btn-outline-dark mt-auto"
                   href="#"
                   >Add to cart</a
                 >
+                {% else %}
+                <div class="alert alert-danger" role="alert">
+                  Produit en rupture de stock
               </div>
+                {% endif %}
             </div>
           </div>
         </div>
