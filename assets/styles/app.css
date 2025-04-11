@@ -1,0 +1,29 @@
+/* body {
+  background-color: skyblue;
+} */
+
+h1 {
+  color: blanchedalmond;
+}
+header {
+  background: url(../styles/image/bg.webp);
+  background-size: cover;
+}
+.text-white-50 {
+  color: antiquewhite !important;
+}
+.lead {
+  font-size: 1.8rem;
+}
+#h1_login {
+  color: #664d03;
+  margin: 70px auto;
+}
+#h1_register {
+  color: #664d03;
+  margin: 70px auto;
+}
+
+#form_login {
+  margin: 50px auto 200px auto;
+}

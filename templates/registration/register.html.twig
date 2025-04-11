@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+<section class="container" id="form_login">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+    <h1 id="h1_register">Inscription</h1>
+
+    {{ form_errors(registrationForm) }}
+
+    {{ form_start(registrationForm) }}
+    <fieldset class="mb-3">
+        <legend>Informations personnelles</legend>
+        {{ form_row(registrationForm.firstname) }}
+        {{ form_row(registrationForm.lastname) }}
+        {{ form_row(registrationForm.email) }}
+        </fieldset>
+
+        <fieldset class="mb-3">
+        <legend>Informations de contact</legend>
+        {{ form_row(registrationForm.address) }}
+        {{ form_row(registrationForm.zipcode) }}
+        {{ form_row(registrationForm.city) }}
+        </fieldset>
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Mot de passe',
+            help: 'Votre mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.'
+        }) }}
+        {{ form_row(registrationForm.RGPDConsent) }}
+
+        <button type="submit" class="btn btn-lg btn-dark mt-3">Inscription</button>
+    {{ form_end(registrationForm) }}
+    </div>
+    </div>
+</section>
+{% endblock %}

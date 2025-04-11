@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div id="error_page">
+ <div class="content_error">
+<svg viewBox="0 0 960 300">
+	<symbol id="s-text">
+		<text text-anchor="middle" x="50%" y="50%">404</text>
+	</symbol>
+
+	<g class = "g-ants">
+		<use xlink:href="#s-text" class="text"></use>
+		<use xlink:href="#s-text" class="text"></use>
+		<use xlink:href="#s-text" class="text"></use>
+		<use xlink:href="#s-text" class="text"></use>
+		<use xlink:href="#s-text" class="text"></use>
+	</g>
+</svg>
+     
+    <h1>Page Not Found</h1>
+    <a href="{{ path('app_home') }}" class="error_link">Back to Home</a>
+    </div>
+</div>
+{% endblock %}
