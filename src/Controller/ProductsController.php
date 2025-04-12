@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Products;
-use App\Entity\Categories;
 use App\Repository\CategoriesRepository;
 use App\Repository\ProductsRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +15,7 @@ final class ProductsController extends AbstractController
     #[Route('/', name: 'index.products')]
     public function index(CategoriesRepository $categoriesRepository): Response
     {
+
         return $this->render('products/index.html.twig', [
             'categories' => $categoriesRepository->findBy([], ['categoryOrder' => 'ASC']),
         ]);
@@ -33,6 +33,4 @@ final class ProductsController extends AbstractController
         // dd($product->getDescription());
         return $this->render('products/details.html.twig', compact('product'));
     }
-
-
 }
