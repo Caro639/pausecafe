@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %} {% block title
 %}Catégories{% endblock %} {% block body %}
-<h2>
-  Liste des produits de la catégorie {{
+<h2 class="text-center mt-4 mb-5">
+  Nos Cafés {{
   category.name }}
 </h2>
 
@@ -23,9 +23,9 @@
           <div class="card-body p-4">
             <div class="text-center">
               <!-- Product name-->
-              <h2 class="fw-bolder">
+              <h3 class="fw-bolder">
                 {{ product.name }}
-              </h2>
+              </h3>
               <!-- Product description-->
               <p>{{ product.description }}</p>
               <!-- Product price-->
