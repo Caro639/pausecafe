@@ -20,7 +20,7 @@ Envoi de mail Test avec [Mailtrap](https://mailtrap.io/)
 
 Vérification utilisateur json token JWT [JWT](https://jwt.io/)
 
-Systeme d'Upload Files via Symfony 6 documentation [Upload Files](https://symfony.com/doc/current/controller/upload_file.html)
+Système d'Upload Files création du service PictureService ajax retourne format webp
 
 ## Extensions VS Code
 

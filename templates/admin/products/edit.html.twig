@@ -7,8 +7,12 @@
 <section class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3">
+        <div data-controller="images" data-action="load->images#connect">
+  <div id="images" onload="()">
             <h2 class="text-center">Modifier un produit</h2>
             {% include "admin/products/_form.html.twig" %}
+    </div>
+</div>
         </div>
     </div>
 </section>

@@ -4,7 +4,7 @@
 
 <!-- Section-->
 <section class="py-5">
-  <h2>{{ product.name }}</h2>
+  <h2 class="text-center">{{ product.name }}</h2>
   <div class="container px-4 px-lg-5 mt-5">
     <div
       class="card mb-8 mb-lg-0"
@@ -22,7 +22,7 @@
   <div class="carousel-inner">      
   {% for image in product.images %}
             <div class="carousel-item {{ (loop.first) ? 'active' : '' }}">
-              <img src="{{ asset('assets/images/') ~ image.name }}"
+              <img src="{{ asset('images/products/') ~ image.name }}"
                     class="img-fluid rounded-start"
                     alt="{{ product.name}}">
               </div>
@@ -45,6 +45,9 @@
             </h3>
             <p class="card-text">
               {{ product.categories.name }}
+            </p>
+            <p class="card-text">
+              {{ product.description }}
             </p>
             <p class="card-text">
               This is a wider card with supporting
