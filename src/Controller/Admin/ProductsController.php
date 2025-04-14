@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Images;
 use App\Entity\Products;
 use App\Form\ProductsFormType;
+use App\Repository\ProductsRepository;
 use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,16 +15,18 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/admin/produits', name: 'admin_products_')]
+#[Route('/admin/produits', name: 'admin_product_')]
 class ProductsController extends AbstractController
 {
     #[Route('/', name: 'index.admin')]
-    public function index(): Response
+    public function index(ProductsRepository $productsRepository): Response
     {
+        $produits = $productsRepository->findAll();
         return $this->render('admin/products/index.html.twig', [
-            'controller_name' => 'UsersController',
+            'produits' => $produits,
         ]);
     }
+
     #[Route('/ajout', name: 'add.admin')]
     public function add(
         Request $request,

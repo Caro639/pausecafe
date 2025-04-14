@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration Accueil PauseCafé{% endblock %}
+
+{% block body %}
+
+<div class="container">
+        <div class="row">
+<aside class="col-9 border border-light bg-white p-2">
+    <article class="card mb-3">
+        <div class="card-header">
+            Catégories
+        </div>
+        <div class="card-body">
+            <p>
+                <a href="{{ path('admin_modif_categories_index.category', {'_fragment': 'categories'}) }}" class="btn btn-dark">Liste des Catégories</a>
+            </p>
+            <p>
+                <a href="#" class="btn btn-dark">Ajouter une catégorie</a>
+            </p>
+        </div>
+    </article>
+    <article class="card mb-3">
+        <div class="card-header">
+            Produits
+        </div>
+        <div class="card-body">
+            <p>
+                <a href="{{ path('admin_product_index.admin', {'_fragment': 'produits'}) }}" class="btn btn-dark">Liste des Produits</a>
+            </p>
+            <p>
+                <a href="{{ path('admin_product_add.admin')}}" class="btn btn-dark">Ajouter un produit</a>
+            </p>
+        </div>
+    </article>
+    <article class="card mb-3">
+        <div class="card-header">
+            Utilisateurs
+        </div>
+        <div class="card-body">
+            <p>
+                <a href="{{ path('admin_users_index', {'_fragment': 'clients'}) }}" class="btn btn-dark">Liste des Utilisateurs</a>
+            </p>
+        </div>
+    </article>
+</aside>
+</div>
+</div>
+{% endblock %}

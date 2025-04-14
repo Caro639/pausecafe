@@ -169,15 +169,36 @@
             <li>
               <a
                 class="dropdown-item"
-                href="{{ path('admin_products_index.admin')}}"
+                href="{{ path('admin_modify_index.modify')}}"
                 >Administration</a
               >
             </li>
             <li>
               <a
                 class="dropdown-item"
-                href="{{ path('admin_products_add.admin')}}"
+                href="{{ path('admin')}}"
+                >Dashboard</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="{{ path('admin_product_index.admin')}}"
+                >Mes produits</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="{{ path('admin_product_add.admin')}}"
                 >Ajouter des produits</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="{{ path('admin_users_index')}}"
+                >Les clients</a
               >
             </li>
             {% endif %}

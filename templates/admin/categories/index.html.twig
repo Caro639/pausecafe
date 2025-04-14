@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier des catégories{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            {% include "partials/_adminnav.html.twig" %}
+            <main class="col-9 border border-light bg-white p-2">
+                <h2 id="categories">Modifier des catégories</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Parent</th>
+                            <th>Slug</th>
+                            <th>Ordre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for categorie in categories %}
+                            <tr>
+                                <td>{{ categorie.id }}</td>
+                                <td>{{ categorie.name }}</td>
+                                {% if categorie.parent is not null %}
+                                <td>{{ categorie.parent.name }}</td>
+                                {% endif %}
+                                <td>{{ categorie.slug }}</td>
+                                <td>{{ categorie.categoryOrder }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </main>
+    </div>
+{% endblock %}
