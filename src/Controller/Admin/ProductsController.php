@@ -40,6 +40,7 @@ class ProductsController extends AbstractController
 
             $images = $productForm->get('images')->getData();
 
+            // dd($images);
             foreach ($images as $image) {
                 $folder = 'products';
 
@@ -53,7 +54,7 @@ class ProductsController extends AbstractController
             $slug = $slugger->slug($product->getName());
             $product->setSlug($slug);
 
-            $prix = $product->getPrice() / 100;
+            $prix = $product->getPrice();
             $product->setPrice($prix);
 
             $em->persist($product);
@@ -96,9 +97,8 @@ class ProductsController extends AbstractController
             $slug = $slugger->slug($product->getName());
             $product->setSlug($slug);
 
-            $prix = $product->getPrice() / 100;
+            $prix = $product->getPrice();
             $product->setPrice($prix);
-
 
             $em->persist($product);
             $em->flush();
@@ -113,13 +113,16 @@ class ProductsController extends AbstractController
         ]);
     }
     #[Route('/suppression/{id}', name: 'delete.admin')]
-    public function delete(Products $product): Response
+    public function delete(Products $product, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('PRODUCT_DELETE', $product);
-
-        return $this->render('admin/products/index.html.twig', [
-            'controller_name' => 'UsersController',
-        ]);
+        $em->remove($product);
+        $em->flush();
+        $this->addFlash('success', 'Le produit a bien été supprimé !');
+        return $this->redirectToRoute('admin_products_index.admin');
+        // return $this->render('admin/products/index.html.twig', [
+        //     'controller_name' => 'UsersController',
+        // ]);
     }
     #[Route('/suppression/image/{id}', name: 'delete.image', methods: ['DELETE'])]
     public function deleteImage(

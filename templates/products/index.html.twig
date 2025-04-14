@@ -8,7 +8,7 @@
       class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
     >
       <div class="col-12">
-        <h2>Liste des produits</h2>
+        <h2>Catégories de cafés</h2>
       </div>
       {% for category in categories %} {% if
       category.parent == null %}
@@ -23,7 +23,7 @@
         <div class="card h-100">
           <img
             class="card-img-top"
-            src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+            src="{{ asset('images/products-1.webp') }}"
             alt="photo du café"
           />
 
@@ -45,7 +45,6 @@
                 >View options</a
               >
             </div>
-            <a href="#">{{ category.name }}</a>
           </div>
         </div>
       </div>

@@ -9,8 +9,11 @@ use App\Entity\Trait\CreatedAtTrait;
 use App\Repository\ProductsRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ProductsRepository::class)]
+#[UniqueEntity('name')]
 class Products
 {
     use CreatedAtTrait;
@@ -22,15 +25,27 @@ class Products
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom du produit est obligatoire')]
+    #[Assert\Length(
+        min: 4,
+        max: 200,
+        minMessage: 'Le nom du produit doit faire au moins {{ limit }} caractères',
+        maxMessage: 'Le nom du produit ne peut pas dépasser {{ limit }} caractères'
+    )]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'La description est obligatoire')]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Le prix est obligatoire')]
+    #[Assert\Positive(message: 'Le prix doit être supérieur à 0')]
     private ?int $price = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Le stock est obligatoire')]
+    #[Assert\PositiveOrZero(message: 'Le stock doit être supérieur ou égal à 0')]
     private ?int $stock = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
@@ -40,8 +55,8 @@ class Products
     /**
      * @var Collection<int, Images>
      */
-    #[ORM\OneToMany(targetEntity: Images::class, mappedBy: 'products', orphanRemoval: true,
-        cascade: ['persist']
+    #[ORM\OneToMany(targetEntity: Images::class, mappedBy: 'products',
+        orphanRemoval: true, cascade: ['persist']
     )]
     private Collection $images;
 
@@ -56,6 +71,11 @@ class Products
         $this->images = new ArrayCollection();
         $this->ordersDetails = new ArrayCollection();
         $this->created_at = new \DateTimeImmutable();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
     public function getId(): ?int
