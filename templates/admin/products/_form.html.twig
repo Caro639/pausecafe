@@ -1,9 +1,15 @@
 {{ form_start(productForm) }}
+
 {{ form_row(productForm.name) }}
+
 {{ form_row(productForm.description) }}
+
 {{ form_row(productForm.price) }}
+
 {{ form_row(productForm.stock) }}
+
 {{ form_row(productForm.categories) }}
+
 
 {% if app.request.attributes.get('_route') is defined and app.request.attributes.get('_route') == 'admin_product_edit.admin' %}
 <h3 class="mt-4">Images</h3>

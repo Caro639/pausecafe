@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %} 
+{% block title %}Hello ProductsController!{% endblock %} 
+{% block body %} 
+
+<section class="py-5">
+  <div class="container px-4 px-lg-5 mt-5">
+    <div
+      class="row"
+    >
+      <div class="col-12">
+        <h2 class="text-center">Votre panier d'achats</h2>
+        <div class="table-responsive m-4">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Produit</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">Total</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for element in data %}
+              <tr>
+                <td>
+                <a
+                class="text-decoration-none"
+                style="color: #000"
+                href="{{ path('products_details', {'slug': element.product.slug }) }}">
+                {{ element.product.name }}
+                </a>
+                </td>
+                <td>{{ element.product.price / 100 }} €</td>
+                <td>{{ element.quantity }}</td>
+                <td>{{ element.quantity * element.product.price / 100 }} €</td>
+                <td>
+                <a href="#" class="btn btn-dark">+</a>
+                <a href="#" class="btn btn-dark">-</a>
+                <a href="#" class="btn btn-dark">Supprimer</a>
+                </td>
+              </tr>
+              {% else %}
+                <tr>
+                    <td colspan="5" class="text-center">Votre panier est vide.</td>
+                </tr>    
+              {% endfor %}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4" class="text-end">Total</td>
+                <td colspan="2">{{ total / 100 }} €</td>
+                <td>
+                  <a href="#" class="btn btn-dark">Vider le panier</a>
+                </td>
+                <td>
+                <a href="#" class="btn" role="button" style="background-color: #fb986c">Valider la commande</a>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+
+          {# {% if cart is empty %}
+          <p>Votre panier est vide.</p>
+          {% else %}
+          <p>Total : {{ totalPrice / 100 }} €</p>
+          {% endif %} #}
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}
+

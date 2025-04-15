@@ -3,14 +3,16 @@
 } */
 
 h1 {
-  color: blanchedalmond;
+  color: #fb986c;
 }
 header {
   background: url(../styles/image/bg.webp);
   background-size: cover;
 }
 .text-white-50 {
-  color: antiquewhite !important;
+  color: white !important;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 .lead {
   font-size: 1.8rem;
@@ -26,4 +28,13 @@ header {
 
 #form_login {
   margin: 50px auto 200px auto;
+}
+
+.active > .page-link {
+  background-color: #fb986c;
+  border-color: #fb986c;
+}
+
+.page-link {
+  color: var(--bs-heading-color);
 }

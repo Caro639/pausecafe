@@ -64,9 +64,10 @@
             {% if product.stock > 0 %}
               <div class="text-center">
                 <a
-                  class="btn btn-outline-dark mt-auto"
-                  href="#"
-                  >Add to cart</a
+                  class="btn mt-auto"
+                  href="{{ path('cart_add.cart', { id: product.id }) }}"
+                  role="button" style="background-color: #fb986c"
+                  >Ajouter au panier</a
                 >
                 {% else %}
                 <div class="alert alert-danger" role="alert">
