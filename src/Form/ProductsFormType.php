@@ -32,6 +32,10 @@ class ProductsFormType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
+                'constraints' => [
+                    new Assert\Length(['min' => 4, 'max' => 255]),
+                    new Assert\NotBlank()
+                ]
             ])
             ->add('description', TextareaType::class, [
                 'attr' => [
@@ -41,6 +45,9 @@ class ProductsFormType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
+                'constraints' => [
+                    new Assert\NotBlank()
+                ]
             ])
             ->add('price', MoneyType::class, [
                 'divisor' => 100,
@@ -65,6 +72,10 @@ class ProductsFormType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
+                'constraints' => [
+                    new Assert\PositiveOrZero(message: 'Le stock ne peut être inférieur à 0'),
+                    new Assert\NotBlank(message: 'Le stock est obligatoire'),
+                ],
             ])
             ->add('categories', EntityType::class, [
                 'class' => Categories::class,
@@ -82,6 +93,10 @@ class ProductsFormType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
+                'constraints' => [
+                    new Assert\Length(['min' => 2, 'max' => 100]),
+                    new Assert\NotBlank()
+                ]
             ])
             ->add('images', FileType::class, [
                 'label' => false,

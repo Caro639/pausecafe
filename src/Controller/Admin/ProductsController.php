@@ -64,7 +64,7 @@ class ProductsController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'Le produit a bien été ajouté !');
-            return $this->redirectToRoute('admin_products_index.admin');
+            return $this->redirectToRoute('admin_product_index.admin');
         }
 
         return $this->render('admin/products/add.html.twig', [
@@ -107,7 +107,7 @@ class ProductsController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'Le produit a bien été modifié !');
-            return $this->redirectToRoute('admin_products_index.admin');
+            return $this->redirectToRoute('admin_product_index.admin');
         }
 
         return $this->render('admin/products/edit.html.twig', [
@@ -122,7 +122,7 @@ class ProductsController extends AbstractController
         $em->remove($product);
         $em->flush();
         $this->addFlash('success', 'Le produit a bien été supprimé !');
-        return $this->redirectToRoute('admin_products_index.admin');
+        return $this->redirectToRoute('admin_product_index.admin');
         // return $this->render('admin/products/index.html.twig', [
         //     'controller_name' => 'UsersController',
         // ]);

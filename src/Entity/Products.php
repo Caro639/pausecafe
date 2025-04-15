@@ -11,9 +11,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use ORM\HasLifecycleCallbacks;
 
 #[ORM\Entity(repositoryClass: ProductsRepository::class)]
 #[UniqueEntity('name')]
+#[ORM\HasLifecycleCallbacks]
 class Products
 {
     use CreatedAtTrait;
@@ -28,7 +30,7 @@ class Products
     #[Assert\NotBlank(message: 'Le nom du produit est obligatoire')]
     #[Assert\Length(
         min: 4,
-        max: 200,
+        max: 255,
         minMessage: 'Le nom du produit doit faire au moins {{ limit }} caractères',
         maxMessage: 'Le nom du produit ne peut pas dépasser {{ limit }} caractères'
     )]
@@ -66,11 +68,22 @@ class Products
     #[ORM\OneToMany(targetEntity: OrdersDetails::class, mappedBy: 'products')]
     private Collection $ordersDetails;
 
+    #[ORM\Column(options: ["default" => "CURRENT_TIMESTAMP"])]
+    private ?\DateTimeImmutable $updatedAt = null;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->ordersDetails = new ArrayCollection();
         $this->created_at = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function setUpdatedValue(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function __toString()
@@ -199,6 +212,18 @@ class Products
                 $ordersDetail->setProducts(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

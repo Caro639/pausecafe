@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class RegistrationFormType extends AbstractType
 {
@@ -21,39 +22,67 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'minlength' => 5,
+                    'maxlength' => 180,
+                    'placeholder' => 'Votre adresse e-mail',
                 ],
                 'label' => 'E-mail',
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Email(),
+                    new Assert\Length(['min' => 5, 'max' => 180])
+                ]
             ])
             ->add('lastname', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ],
                 'label' => 'Nom',
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 2, 'max' => 100])
+                ]
             ])
             ->add('firstname', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ],
                 'label' => 'Prénom',
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 2, 'max' => 100])
+                ]
             ])
             ->add('address', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ],
                 'label' => 'Adresse',
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 5, 'max' => 255])
+                ]
             ])
             ->add('zipcode', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ],
                 'label' => 'Code postal',
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 5, 'max' => 5])
+                ]
             ])
             ->add('city', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ],
                 'label' => 'Ville',
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 2, 'max' => 150])
+                ]
             ])
             ->add('RGPDConsent', CheckboxType::class, [
                 'mapped' => false,

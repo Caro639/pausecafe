@@ -7,7 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CategoriesRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+#[UniqueEntity(fields: ['name'], message: 'Cette catégorie existe déjà.')]
 #[ORM\Entity(repositoryClass: CategoriesRepository::class)]
 class Categories
 {
@@ -19,6 +22,8 @@ class Categories
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min: 2, max: 100)]
     private ?string $name = null;
 
     #[ORM\Column(type: 'integer')]

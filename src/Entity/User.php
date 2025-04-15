@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -24,33 +25,52 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Assert\Email()]
+    #[Assert\Length(
+        min: 5,
+        max: 180,
+        minMessage: 'Your email must be at least {{ limit }} characters long',
+        maxMessage: 'Your email cannot be longer than {{ limit }} characters'
+    )]
     private ?string $email = null;
 
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
+    #[Assert\NotNull()]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank()]
     private ?string $password = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min: 2, max: 100)]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min: 2, max: 100)]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min: 5, max: 255)]
     private ?string $address = null;
 
     #[ORM\Column(length: 5)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min: 5, max: 5)]
     private ?string $zipcode = null;
 
     #[ORM\Column(length: 150)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min: 2, max: 150)]
     private ?string $city = null;
 
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
