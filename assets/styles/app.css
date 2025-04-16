@@ -38,3 +38,14 @@ header {
 .page-link {
   color: var(--bs-heading-color);
 }
+
+.lead {
+  background-color: #212529;
+  border-radius: 25px;
+  width: 50%;
+  margin: auto;
+}
+
+.fw-normal {
+  font-weight: 500 !important;
+}

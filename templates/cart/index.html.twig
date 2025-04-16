@@ -35,9 +35,9 @@
                 <td>{{ element.quantity }}</td>
                 <td>{{ element.quantity * element.product.price / 100 }} €</td>
                 <td>
-                <a href="#" class="btn btn-dark">+</a>
-                <a href="#" class="btn btn-dark">-</a>
-                <a href="#" class="btn btn-dark">Supprimer</a>
+                <a href="{{ path('cart_add.cart', {id: element.product.id }) }}" class="btn btn-dark">+</a>
+                <a href="{{ path('cart_remove.cart', {id: element.product.id }) }}" class="btn btn-dark">-</a>
+                <a href="{{ path('cart_delete.cart', {id: element.product.id }) }}" class="btn btn-dark">Supprimer</a>
                 </td>
               </tr>
               {% else %}
@@ -48,10 +48,10 @@
             </tbody>
             <tfoot>
               <tr>
-                <td colspan="4" class="text-end">Total</td>
+                <td colspan="3" class="text-end">Total</td>
                 <td colspan="2">{{ total / 100 }} €</td>
                 <td>
-                  <a href="#" class="btn btn-dark">Vider le panier</a>
+                  <a href="{{ path('cart_empty.cart') }}" class="btn btn-dark">Vider le panier</a>
                 </td>
                 <td>
                 <a href="#" class="btn" role="button" style="background-color: #fb986c">Valider la commande</a>
@@ -59,12 +59,6 @@
               </tr>
             </tfoot>
           </table>
-
-          {# {% if cart is empty %}
-          <p>Votre panier est vide.</p>
-          {% else %}
-          <p>Total : {{ totalPrice / 100 }} €</p>
-          {% endif %} #}
       </div>
 
     </div>
