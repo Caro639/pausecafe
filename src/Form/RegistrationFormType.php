@@ -9,11 +9,11 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class RegistrationFormType extends AbstractType
 {
@@ -29,7 +29,6 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'E-mail',
                 'constraints' => [
-                    new Assert\NotBlank(),
                     new Assert\Email(),
                     new Assert\Length(['min' => 5, 'max' => 180])
                 ]
@@ -40,7 +39,6 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Nom',
                 'constraints' => [
-                    new Assert\NotBlank(),
                     new Assert\Length(['min' => 2, 'max' => 100])
                 ]
             ])
@@ -50,7 +48,6 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Prénom',
                 'constraints' => [
-                    new Assert\NotBlank(),
                     new Assert\Length(['min' => 2, 'max' => 100])
                 ]
             ])
@@ -60,7 +57,6 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Adresse',
                 'constraints' => [
-                    new Assert\NotBlank(),
                     new Assert\Length(['min' => 5, 'max' => 255])
                 ]
             ])
@@ -70,7 +66,6 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Code postal',
                 'constraints' => [
-                    new Assert\NotBlank(),
                     new Assert\Length(['min' => 5, 'max' => 5])
                 ]
             ])
@@ -80,7 +75,6 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Ville',
                 'constraints' => [
-                    new Assert\NotBlank(),
                     new Assert\Length(['min' => 2, 'max' => 150])
                 ]
             ])

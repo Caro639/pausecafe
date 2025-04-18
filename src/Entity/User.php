@@ -38,14 +38,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var list<string> The user roles
      */
     #[ORM\Column]
-    #[Assert\NotNull()]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank()]
     private ?string $password = null;
 
     #[ORM\Column(length: 100)]
@@ -76,7 +74,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private ?bool $isVerified = false;
 
-    #[ORM\Column(type: 'string', length: 100)]
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private ?string $resetToken = null;
 
     /**

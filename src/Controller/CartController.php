@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Products;
 use App\Repository\ProductsRepository;
+use App\Service\CartService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -13,73 +14,67 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 final class CartController extends AbstractController
 {
     #[Route('/', name: 'index.cart')]
-    public function index(SessionInterface $session, ProductsRepository $productsRepository): Response
-    {
-        $panier = $session->get('panier', []);
+    public function index(
+        SessionInterface $session,
+        ProductsRepository $productsRepository,
+        CartService $cartService
+    ): Response {
 
-        $data = [];
-        $total = 0;
+        $data = $cartService->getCart($session, $productsRepository)['data'];
+        $total = $cartService->getCart($session, $productsRepository)['total'];
 
-        foreach ($panier as $id => $quantity) {
-            $product = $productsRepository->find($id);
 
-            $data[] = [
-                'product' => $product,
-                'quantity' => $quantity,
-            ];
-            $total += $product->getPrice() * $quantity;
-        }
         return $this->render('cart/index.html.twig', [
             'data' => $data,
             'total' => $total,
         ]);
     }
 
-    #[Route('/add/{id}', name: 'add.cart')]
-    public function add(Products $product, SessionInterface $session): Response
-    {
+    #[Route('/add/{id}', name: 'add.cart', condition: "params['id']")]
+    public function add(
+        Products $product,
+        CartService $cartService,
+        SessionInterface $session,
+    ): Response {
         $id = $product->getId();
 
-        $panier = $session->get('panier', []);
-        if (empty($panier[$id])) {
-            $panier[$id] = 1;
-        } else {
-            $panier[$id]++;
+        if (!$product) {
+            throw $this->createNotFoundException("Le produit $id introuvable !");
         }
-        $session->set('panier', $panier);
 
-        return $this->redirectToRoute('cart_index.cart');
+        $cartService->add($product, $session);
+
+        $this->addFlash('success', 'Le produit a bien été ajouté au panier !');
+
+        return $this->redirectToRoute('products_details', ['slug' => $product->getSlug()]);
     }
 
     #[Route('/remove/{id}', name: 'remove.cart')]
-    public function remove(Products $product, SessionInterface $session): Response
-    {
-        $id = $product->getId();
+    public function remove(
+        Products $product,
+        SessionInterface $session,
+        CartService $cartService
+    ): Response {
 
-        $panier = $session->get('panier', []);
-        if (!empty($panier[$id])) {
-            if ($panier[$id] > 1) {
-                $panier[$id]--;
-            } else {
-                unset($panier[$id]);
-            }
-        }
-        $session->set('panier', $panier);
+        $product->getId();
+
+        $cartService->remove($product, $session);
+        $this->addFlash('success', 'Le produit a bien été retiré du panier !');
 
         return $this->redirectToRoute('cart_index.cart');
     }
 
     #[Route('/delete/{id}', name: 'delete.cart')]
-    public function delete(Products $product, SessionInterface $session): Response
-    {
-        $id = $product->getId();
+    public function delete(
+        Products $product,
+        SessionInterface $session,
+        CartService $cartService
+    ): Response {
 
-        $panier = $session->get('panier', []);
-        if (!empty($panier[$id])) {
-            unset($panier[$id]);
-        }
+        $product->getId();
 
-        $session->set('panier', $panier);
+        $cartService->delete($product, $session);
+        $this->addFlash('success', 'Le produit a bien été supprimé du panier !');
 
         return $this->redirectToRoute('cart_index.cart');
     }

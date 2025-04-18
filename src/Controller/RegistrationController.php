@@ -28,7 +28,9 @@ class RegistrationController extends AbstractController
         JWTService $jwt
     ): Response {
         $user = new User();
+
         $user->setRoles(['ROLE_USER']);
+
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
@@ -40,6 +42,9 @@ class RegistrationController extends AbstractController
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
             $entityManager->persist($user);
+            // dd($user);
+
+
             $entityManager->flush();
 
             // do anything else you need here, like send an email
@@ -109,7 +114,9 @@ class RegistrationController extends AbstractController
                     'success',
                     'Votre compte a été activé avec succès.'
                 );
-                return $this->redirectToRoute('profile_index.profile');
+                return $this->redirectToRoute('profile_index.profile', [
+                    'id' => $user->getId(),
+                ]);
             }
 
         }
@@ -141,7 +148,9 @@ class RegistrationController extends AbstractController
                 'warning',
                 'Votre compte est déjà activé.'
             );
-            return $this->redirectToRoute('profile_index.profile');
+            return $this->redirectToRoute('profile_index.profile', [
+                'id' => $user->getId(),
+            ]);
         }
 
         $header = [
@@ -174,6 +183,8 @@ class RegistrationController extends AbstractController
             'success',
             'Un email de vérification a été envoyé.'
         );
-        return $this->redirectToRoute('profile_index.profile');
+        return $this->redirectToRoute('profile_index.profile', [
+            'id' => $user->getId(),
+        ]);
     }
 }

@@ -31,6 +31,8 @@ final class ProductsController extends AbstractController
             throw $this->createNotFoundException('Produit non trouvé.');
         }
         // dd($product->getDescription());
-        return $this->render('products/details.html.twig', compact('product'));
+        return $this->render('products/details.html.twig', [
+            'product' => $product,
+        ]);
     }
 }

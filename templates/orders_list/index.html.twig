@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vos commandes PauseCafé{% endblock %}
+
+{% block body %}
+<section class="py-5">
+  <div class="container px-4 px-lg-5 mt-5">
+    <div
+      class="row"
+    >
+      <div class="col-12">
+        <h2 class="text-center">Vos commandes {{ app.user.firstname }}</h2>
+        <div class="table-responsive m-4">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Numéro</th>
+                <th scope="col">Addresse</th>
+                <th scope="col">Date de commande</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in orders %}
+              <tr>
+                <td>
+                    {{ order.id }}
+                </td>
+                <td>adresse</td>
+                <td>{{ order.createdAt|date('d/m/Y') }}</td>
+                {# <td>{{ total / 100 }} €</td> #}
+                {# <td>
+                    <a href="{{ path('orders_details', {'id': order.id }) }}" class="btn btn-dark">Détails</a>
+                </td> #}
+              </tr>
+              {% else %}
+                <tr>
+                    <td colspan="5" class="text-center">Votre panier est vide.</td>
+                </tr>    
+              {% endfor %}
+            </tbody>
+            {# <tfoot>
+              <tr>
+                <td colspan="3" class="text-end">Total</td>
+                <td colspan="2">{{ total / 100 }} €</td>
+                <td>
+                  <a href="{{ path('cart_empty.cart') }}" class="btn btn-dark">Vider le panier</a>
+                </td>
+                <td>
+                <a href="{{ path('orders_add') }}" class="btn" role="button" style="background-color: #fb986c">Valider la commande</a>
+                </td>
+              </tr>
+            </tfoot> #}
+          </table>
+              <a href="{{ path('products_index.products') }}" class="btn btn-dark">Continuer vos achats</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

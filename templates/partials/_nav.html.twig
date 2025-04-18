@@ -109,14 +109,14 @@
             <li>
               <a
                 class="dropdown-item"
-                href="{{ path('profile_index.profile')}}"
+                href="{{ path('profile_index.profile', { id: app.user.id }) }}"
                 >Mon compte</a
               >
             </li>
             <li>
               <a
                 class="dropdown-item"
-                href="{{ path('profile_orders')}}"
+                href="#"
                 >Mes commandes</a
               >
             </li>

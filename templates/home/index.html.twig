@@ -27,6 +27,9 @@
                                 href="{{ path('products_details', {slug: product.slug}) }}" 
                                 role="button" style="background-color: #fb986c">View details</a></div>
                             </div>
+                                <div class="text-center"><a class="btn mb-4" 
+                                href="{{ path('cart_add.cart', { id: product.id }) }}" 
+                                role="button" style="background-color: #fb986c">Ajouter au panier</a></div>
                         </div>
                     </div>
                 {% endfor %}
