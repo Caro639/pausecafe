@@ -56,6 +56,9 @@ class Orders
     #[ORM\Column(length: 255)]
     private ?string $status = 'PENDING';
 
+    #[ORM\Column(nullable: true)]
+    private ?int $ordertotal = null;
+
     public function __construct()
     {
         $this->ordersDetails = new ArrayCollection();
@@ -189,6 +192,18 @@ class Orders
     public function setStatus(string $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getOrdertotal(): ?int
+    {
+        return $this->ordertotal;
+    }
+
+    public function setOrdertotal(?int $ordertotal): static
+    {
+        $this->ordertotal = $ordertotal;
 
         return $this;
     }

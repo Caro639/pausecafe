@@ -51,14 +51,17 @@ final class OrdersController extends AbstractController
 
         $order = new Orders();
 
+        $ordertotal = $cartService->getCart($session, $productsRepository)['total'];
         $user = $userRepository->findOneBy(['id' => $user->getId()]);
         $lastname = $user->getLastName();
         $address = $user->getAddress();
         $zipCode = $user->getZipCode();
         $city = $user->getCity();
 
+
         // $order->setPromo($user->getPromo());
 
+        $order->setOrdertotal($ordertotal);
         $order->setUser($user);
         $reference = $createdAt = new \DateTimeImmutable();
         $reference = $createdAt->format('dmY') . '-' . uniqid();
@@ -70,6 +73,8 @@ final class OrdersController extends AbstractController
         $order->setZipcode($zipCode);
         $order->setCity($city);
         $order->setStatus(Orders::STATUS_PENDING);
+
+        // dd($order);
 
         foreach ($panier as $item => $quantity) {
             $ordersDetails = new OrdersDetails();

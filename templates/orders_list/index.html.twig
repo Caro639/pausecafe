@@ -19,7 +19,8 @@
                 <th scope="col">Code Postal</th>
                 <th scope="col">Ville</th>
                 <th scope="col">Date de commande</th>
-                <th scope="col">Produits commandés - Total de la commande</th>
+                <th scope="col">Produits commandés</th>
+                <th scope="col">Total de la commande</th>
               </tr>
             </thead>
             <tbody>
@@ -38,11 +39,11 @@
                         <li>
                             {{ detail.products.name }} - {{ detail.quantity }} x {{ detail.price / 100 }} €
                         </li>
-                        <li>
-                            {{ detail.total / 100 }} €
-                        </li>
                     {% endfor %}
                     </ul>
+                </td>
+                <td>
+                    {{ order.ordertotal / 100 }} €
                 </td>
               </tr> 
               {% endfor %}
