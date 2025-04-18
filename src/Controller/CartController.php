@@ -13,6 +13,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/cart', name: 'cart_')]
 final class CartController extends AbstractController
 {
+    /**
+     * affiche le panier
+     *
+     * @param SessionInterface $session
+     * @param ProductsRepository $productsRepository
+     * @param CartService $cartService
+     * @return Response
+     */
     #[Route('/', name: 'index.cart')]
     public function index(
         SessionInterface $session,
@@ -30,6 +38,9 @@ final class CartController extends AbstractController
         ]);
     }
 
+    /**
+     * ajoute un produit au panier
+     */
     #[Route('/add/{id}', name: 'add.cart', condition: "params['id']")]
     public function add(
         Products $product,
@@ -49,6 +60,9 @@ final class CartController extends AbstractController
         return $this->redirectToRoute('products_details', ['slug' => $product->getSlug()]);
     }
 
+    /**
+     * retire un produit du panier
+     */
     #[Route('/remove/{id}', name: 'remove.cart')]
     public function remove(
         Products $product,
@@ -64,6 +78,9 @@ final class CartController extends AbstractController
         return $this->redirectToRoute('cart_index.cart');
     }
 
+    /**
+     * supprime un produit du panier
+     */
     #[Route('/delete/{id}', name: 'delete.cart')]
     public function delete(
         Products $product,
@@ -79,6 +96,9 @@ final class CartController extends AbstractController
         return $this->redirectToRoute('cart_index.cart');
     }
 
+    /**
+     * vide le panier
+     */
     #[Route('/empty', name: 'empty.cart')]
     public function empty(SessionInterface $session): Response
     {

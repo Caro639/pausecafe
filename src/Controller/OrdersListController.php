@@ -11,6 +11,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class OrdersListController extends AbstractController
 {
+    /**
+     * Affiche la liste des commandes de l'utilisateur connecté.
+     *
+     * @param User $user
+     * @param OrdersRepository $ordersRepository
+     * @param OrdersDetailsRepository $ordersDetailsRepository
+     * @return Response
+     */
     #[Route('/orders/list', name: 'app_orders_list')]
     public function index(
         User $user,
@@ -33,7 +41,6 @@ final class OrdersListController extends AbstractController
 
         // dd($orders, $ordersDetails);
 
-        // dd($user);
         return $this->render('orders_list/index.html.twig', [
             'orders' => $orders,
             'ordersDetails' => $ordersDetails,

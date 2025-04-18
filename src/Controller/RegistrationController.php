@@ -18,6 +18,17 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class RegistrationController extends AbstractController
 {
+    /**
+     * inscription de l'utilisateur plus envoie d'un mail de vérification
+     *
+     * @param Request $request
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @param Security $security
+     * @param EntityManagerInterface $entityManager
+     * @param SendMailService $mail
+     * @param JWTService $jwt
+     * @return Response
+     */
     #[Route('/inscription', name: 'app_register')]
     public function register(
         Request $request,
@@ -86,6 +97,9 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+    /**
+     * vérification de l'utilisateur
+     */
     #[Route('/verif/{token}', name: 'verify_user')]
     public function verifyUser(
         $token,
@@ -127,6 +141,14 @@ class RegistrationController extends AbstractController
         return $this->redirectToRoute('app_login');
     }
 
+    /**
+     * renvoie de l'email de vérification à la demande de l'utilisateur
+     *
+     * @param JWTService $jwt
+     * @param SendMailService $mail
+     * @param UserRepository $userRepository
+     * @return Response
+     */
     #[Route('/renvoiverif', name: 'resend_verif')]
     public function resendVerif(
         JWTService $jwt,

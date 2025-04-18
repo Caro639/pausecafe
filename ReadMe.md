@@ -20,7 +20,9 @@ Envoi de mail Test avec [Mailtrap](https://mailtrap.io/)
 
 Vérification utilisateur json token JWT [JWT](https://jwt.io/)
 
-Système d'Upload Files création du service PictureService ajax retourne format webp
+Système d'Upload Files création du service PictureService Js retourne format webp + thumbnail
+
+Slug sans bundle
 
 ## Extensions VS Code
 

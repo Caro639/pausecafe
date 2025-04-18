@@ -17,6 +17,12 @@ use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class SecurityController extends AbstractController
 {
+    /**
+     * se connecter
+     *
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
+     */
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -41,6 +47,16 @@ class SecurityController extends AbstractController
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
+    /**
+     * demande de réinitialisation de mot de passe
+     *
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * @param TokenGeneratorInterface $tokenGeneratorInterface
+     * @param EntityManagerInterface $manager
+     * @param SendMailService $mail
+     * @return Response
+     */
     #[Route(path: '/oubli-pass', name: 'forgotten_password')]
     public function forgottenPassword(
         Request $request,
@@ -88,6 +104,9 @@ class SecurityController extends AbstractController
 
     }
 
+    /**
+     * vérification du token et réinitialisation du mot de passe
+     */
     #[Route(path: '/oubli-pass/{token}', name: 'reset_password')]
     public function resetPassword(
         string $token,

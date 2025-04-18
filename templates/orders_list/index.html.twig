@@ -15,8 +15,11 @@
             <thead>
               <tr>
                 <th scope="col">Numéro</th>
-                <th scope="col">Addresse</th>
+                <th scope="col">Adresse</th>
+                <th scope="col">Code Postal</th>
+                <th scope="col">Ville</th>
                 <th scope="col">Date de commande</th>
+                <th scope="col">Produits commandés - Total de la commande</th>
               </tr>
             </thead>
             <tbody>
@@ -25,31 +28,25 @@
                 <td>
                     {{ order.id }}
                 </td>
-                <td>adresse</td>
+                <td>{{ order.address }}</td>
+                <td>{{ order.zipcode }}</td>
+                <td>{{ order.city }}</td>
                 <td>{{ order.createdAt|date('d/m/Y') }}</td>
-                {# <td>{{ total / 100 }} €</td> #}
-                {# <td>
-                    <a href="{{ path('orders_details', {'id': order.id }) }}" class="btn btn-dark">Détails</a>
-                </td> #}
-              </tr>
-              {% else %}
-                <tr>
-                    <td colspan="5" class="text-center">Votre panier est vide.</td>
-                </tr>    
+                <td>
+                    <ul>
+                            {% for detail in order.ordersDetails %}
+                        <li>
+                            {{ detail.products.name }} - {{ detail.quantity }} x {{ detail.price / 100 }} €
+                        </li>
+                        <li>
+                            {{ detail.total / 100 }} €
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </td>
+              </tr> 
               {% endfor %}
             </tbody>
-            {# <tfoot>
-              <tr>
-                <td colspan="3" class="text-end">Total</td>
-                <td colspan="2">{{ total / 100 }} €</td>
-                <td>
-                  <a href="{{ path('cart_empty.cart') }}" class="btn btn-dark">Vider le panier</a>
-                </td>
-                <td>
-                <a href="{{ path('orders_add') }}" class="btn" role="button" style="background-color: #fb986c">Valider la commande</a>
-                </td>
-              </tr>
-            </tfoot> #}
           </table>
               <a href="{{ path('products_index.products') }}" class="btn btn-dark">Continuer vos achats</a>
       </div>
