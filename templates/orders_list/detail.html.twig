@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Vos commandes PauseCafé{% endblock %}
+{% block title %}Votre commande PauseCafé{% endblock %}
 
 {% block body %}
 <section class="py-5">
@@ -9,7 +9,7 @@
       class="row"
     >
       <div class="col-12">
-        <h2 class="text-center">Vos commandes {{ app.user.firstname }}</h2>
+        <h2 class="text-center">Votre commande {{ app.user.firstname }}</h2>
         <div class="table-responsive m-4">
           <table class="table table-bordered table-hover">
             <thead>
@@ -24,12 +24,9 @@
               </tr>
             </thead>
             <tbody>
-              {% for order in orders %}
               <tr>
                 <td>
-                <a href="{{ url('app_orders_detail', { id: order.id }) }}">
                     {{ order.id }}
-                </a>
                 </td>
                 <td>{{ order.address }}</td>
                 <td>{{ order.zipcode }}</td>
@@ -38,9 +35,10 @@
                 <td>
                     <ul>
                             {% for detail in order.ordersDetails %}
+                                {% if order.id == order.id %}
                         <li>
-                            {{ detail.products.name }} - {{ detail.quantity }} x {{ detail.price / 100 }} €
-                        </li>              
+                            {{ detail.name }} - {{ detail.quantity }} x {{ detail.price / 100 }} €
+                            {% endif %}       
                     {% endfor %}
                     </ul>
                 </td>
@@ -48,7 +46,6 @@
                     {{ order.ordertotal / 100 }} €
                 </td>
               </tr>
-              {% endfor %}
             </tbody>
           </table>
               <a href="{{ path('products_index.products') }}" class="btn btn-dark">Continuer vos achats</a>

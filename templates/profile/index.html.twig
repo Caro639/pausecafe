@@ -10,7 +10,7 @@
         <nav aria-label="breadcrumb" class="bg-body-tertiary rounded-3 p-3 mb-4">
           <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
-            <li class="breadcrumb-item"><a href="{{ path('app_orders_list') }}">Vos commandes</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_orders_list', { id: app.user.id }) }}">Vos commandes</a></li>
             <li class="breadcrumb-item active" aria-current="page">Votre compte {{ app.user.firstname }}</li>
           </ol>
         </nav>

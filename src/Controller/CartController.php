@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Products;
-use App\Repository\ProductsRepository;
 use App\Service\CartService;
+use App\Form\OrderComfirmType;
+use App\Repository\ProductsRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -21,7 +23,7 @@ final class CartController extends AbstractController
      * @param CartService $cartService
      * @return Response
      */
-    #[Route('/', name: 'index.cart')]
+    #[Route('/', name: 'index.cart', methods: ['GET', 'POST'])]
     public function index(
         SessionInterface $session,
         ProductsRepository $productsRepository,
@@ -31,21 +33,21 @@ final class CartController extends AbstractController
         $data = $cartService->getCart($session, $productsRepository)['data'];
         $total = $cartService->getCart($session, $productsRepository)['total'];
 
+        $formOrder = $this->createForm(OrderComfirmType::class, null);
 
         return $this->render('cart/index.html.twig', [
             'data' => $data,
             'total' => $total,
+            'formOrder' => $formOrder->createView(),
         ]);
     }
 
-    /**
-     * ajoute un produit au panier
-     */
     #[Route('/add/{id}', name: 'add.cart', condition: "params['id']")]
     public function add(
         Products $product,
         CartService $cartService,
         SessionInterface $session,
+        Request $request
     ): Response {
         $id = $product->getId();
 
@@ -57,7 +59,8 @@ final class CartController extends AbstractController
 
         $this->addFlash('success', 'Le produit a bien été ajouté au panier !');
 
-        return $this->redirectToRoute('products_details', ['slug' => $product->getSlug()]);
+        // return $this->redirectToRoute('products_details', ['slug' => $product->getSlug()]);
+        return $this->redirect($request->headers->get('referer') ?? $this->generateUrl('cart_index.cart'));
     }
 
     /**

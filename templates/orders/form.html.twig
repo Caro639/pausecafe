@@ -4,29 +4,32 @@
 
 {% block body %}
 <section class="py-5">
-<h2 class="text-center">Vérifiez votre commande {{ app.user.firstname }}</h2>
+<h2 class="text-center">Récapitulatif de votre commande {{ app.user.firstname }}</h2>
   <div class="container px-4 px-lg-5 mt-5">
-  <div class="row justify-content-center">
-      <div class="col-lg-8">
+  {# <div class="row">
+      <div class="col-lg-4">
         <div class="card mb-4">
           <div class="card-body text-center"
           >
-          <h3>Vos informations de livraison</h3>
-            <h3 class="my-3">{{ app.user.firstname }}</h3>
-            <p class="text-muted mb-1">{{ order.lastname }}</p>
-            <p class="text-muted mb-4">{{ order.address }}</p>
-            <p class="text-muted mb-4">{{ order.zipcode }}</p>
-            <p class="text-muted mb-4">{{ order.city }}</p>
+          <h3>Vérifier vos informations</h3>
+            <h3 class="my-3">{{ user.firstname }}</h3>
+            <p class="text-muted mb-1">{{ user.lastname }}</p>
+            <p class="text-muted mb-4">{{ user.address }}</p>
+            <p class="text-muted mb-4">{{ user.zipcode }}</p>
+            <p class="text-muted mb-4">{{ user.city }}</p>
+            <div class="d-flex justify-content-center mb-2">
+              <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-dark">Modifier mes informations</button>
+            </div>
           </div>
         </div>
       </div>
-  </div>
+  </div> #}
   
     <div
       class="row"
     >
       <div class="col-12">
-        <h3 class="text-center">Vérifiez votre commande</h3>
+        <h3 class="text-center">Vérifiez votre commande avant paiement</h3>
         <div class="table-responsive m-4">
           <table class="table table-bordered table-hover">
             <thead>
@@ -65,16 +68,17 @@
                 <td colspan="2">{{ total / 100 }} €</td>
                 <td>
               <a href="{{ path('products_index.products') }}" class="btn btn-dark">Continuer vos achats</a>
-                </td>
-                <td>
-                <a href="{{ path('order_payment_form.order', {id: order.id}) }}" 
-                class="btn" role="button" style="background-color: #fb986c">Payer la commande</a>
+                {# <a href="{{ path('orders_add') }}" class="btn" role="button" style="background-color: #fb986c">Valider la commande</a> #}
                 </td>
               </tr>
             </tfoot>
           </table>
+               {# <hr>
+          <h3 class="text-center">Entrez votre adresse de livraison</h3>
+          {{ form(form) }} #}
       </div>
     </div>
   </div>
 </section>
 {% endblock %}
+

@@ -15,6 +15,10 @@ export default class extends Controller {
       "images",
       ImagesController
     );
+    Controller.register(
+      "order_paiement_controller",
+      OrderPaiementController
+    );
     // this.element.textContent = 'Hello Stimulus! Edit me in assets/controllers/hello_controller.js';
   }
 }

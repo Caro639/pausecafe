@@ -116,7 +116,7 @@
             <li>
               <a
                 class="dropdown-item"
-                href="{{ path('app_orders_list') }}"
+                href="{{ path('app_orders_list', { id: app.user.id }) }}"
                 >Mes commandes</a
               >
             </li>

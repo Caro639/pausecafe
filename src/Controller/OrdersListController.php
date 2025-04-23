@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Orders;
 use App\Entity\User;
 use App\Repository\OrdersDetailsRepository;
 use App\Repository\OrdersRepository;
@@ -19,8 +20,9 @@ final class OrdersListController extends AbstractController
      * @param OrdersDetailsRepository $ordersDetailsRepository
      * @return Response
      */
-    #[Route('/orders/list', name: 'app_orders_list')]
+    #[Route('/orders/list/{id}', name: 'app_orders_list')]
     public function index(
+        Orders $orders,
         User $user,
         OrdersRepository $ordersRepository,
         OrdersDetailsRepository $ordersDetailsRepository
@@ -43,6 +45,32 @@ final class OrdersListController extends AbstractController
 
         return $this->render('orders_list/index.html.twig', [
             'orders' => $orders,
+            'ordersDetails' => $ordersDetails,
+        ]);
+    }
+
+
+    #[Route('/orders/list/detail/{id}', name: 'app_orders_detail')]
+    public function show(
+        Orders $order,
+        OrdersDetailsRepository $ordersDetailsRepository
+    ): Response {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $order->getId();
+
+        if (!$order) {
+            $this->addFlash('error', 'Aucune commande trouvée !');
+            return $this->redirectToRoute('app_home');
+        }
+
+        $ordersDetails = $ordersDetailsRepository->findBy(['orders' => $order]);
+
+        // dd($order, $ordersDetails);
+
+        return $this->render('orders_list/detail.html.twig', [
+            'id' => $order->getId(),
+            'order' => $order,
             'ordersDetails' => $ordersDetails,
         ]);
     }

@@ -8,6 +8,18 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartService
 {
+    protected function saveCart(array $panier, SessionInterface $session): void
+    {
+        // Save cart to session
+        $session->set('panier', $panier);
+    }
+
+    public function clear(SessionInterface $session): void
+    {
+        // Empty the cart
+        $session->remove('panier');
+    }
+
     public function add(Products $product, SessionInterface $session)
     {
         // Add product to cart
