@@ -4,40 +4,49 @@ namespace App\Service;
 
 use App\Entity\Products;
 use App\Repository\ProductsRepository;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartService
 {
-    protected function saveCart(array $panier, SessionInterface $session): void
+    private RequestStack $request;
+    private SessionInterface $session;
+
+    public function __construct(RequestStack $request)
+    {
+        $this->session = $request->getSession();
+    }
+
+    protected function saveCart(array $panier): void
     {
         // Save cart to session
-        $session->set('panier', $panier);
+        $this->session->set('panier', $panier);
     }
 
-    public function clear(SessionInterface $session): void
+    public function clear(): void
     {
         // Empty the cart
-        $session->remove('panier');
+        $this->session->remove('panier');
     }
 
-    public function add(Products $product, SessionInterface $session)
+    public function add(Products $product)
     {
         // Add product to cart
         $id = $product->getId();
 
-        $panier = $session->get('panier', []);
+        $panier = $this->session->get('panier', []);
         if (empty($panier[$id])) {
             $panier[$id] = 1;
         } else {
             $panier[$id]++;
         }
-        $session->set('panier', $panier);
+        $this->session->set('panier', $panier);
     }
 
-    public function getCart(SessionInterface $session, ProductsRepository $productsRepository)
+    public function getCart(ProductsRepository $productsRepository)
     {
         // Get the cart
-        $panier = $session->get('panier', []);
+        $panier = $this->session->get('panier', []);
 
         $data = [];
         $total = 0;
@@ -57,12 +66,12 @@ class CartService
         ];
     }
 
-    public function remove(Products $product, SessionInterface $session)
+    public function remove(Products $product)
     {
         // Remove product from cart
         $id = $product->getId();
 
-        $panier = $session->get('panier', []);
+        $panier = $this->session->get('panier', []);
         if (!empty($panier[$id])) {
             if ($panier[$id] > 1) {
                 $panier[$id]--;
@@ -70,19 +79,19 @@ class CartService
                 unset($panier[$id]);
             }
         }
-        $session->set('panier', $panier);
+        $this->session->set('panier', $panier);
     }
 
-    public function delete(Products $product, SessionInterface $session)
+    public function delete(Products $product)
     {
         // Delete product from cart
         $id = $product->getId();
 
-        $panier = $session->get('panier', []);
+        $panier = $this->session->get('panier', []);
         if (!empty($panier[$id])) {
             unset($panier[$id]);
         }
 
-        $session->set('panier', $panier);
+        $this->session->set('panier', $panier);
     }
 }

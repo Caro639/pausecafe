@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Entity\Orders;
-use App\Repository\OrdersRepository;
 use App\Service\CartService;
 use App\Entity\OrdersDetails;
 use App\Form\OrderComfirmType;
@@ -28,7 +26,6 @@ final class OrdersController extends AbstractController
         $this->persister = $persister;
     }
 
-    // todo status PAID & set en BDD + panier vider
     /**
      * Envoie le panier de l'utilisateur connecté vers la page de validation avant paiement.
      *
@@ -80,9 +77,9 @@ final class OrdersController extends AbstractController
             // enregistre bdd
             $order = new Orders();
 
-            $data = $cartService->getCart($session, $productsRepository)['data'];
+            $data = $cartService->getCart($productsRepository)['data'];
 
-            $ordertotal = $cartService->getCart($session, $productsRepository)['total'];
+            $ordertotal = $cartService->getCart($productsRepository)['total'];
 
 
             // $order->setPromo($promo);
@@ -119,46 +116,14 @@ final class OrdersController extends AbstractController
             if (!$order) {
                 throw new \Exception('La commande n\'a pas pu être validée.');
             }
-
-
-            // foreach ($panier as $item => $quantity) {
-            //     $ordersDetails = new OrdersDetails();
-
-            //     $product = $productsRepository->find($item);
-            //     if (!$product) {
-            //         $this->addFlash('error', 'Produit introuvable !');
-            //         return $this->redirectToRoute('app_home');
-            //     }
-
-            //     $price = $product->getPrice();
-            //     $name = $product->getName();
-            //     $total = $cartService->getCart($session, $productsRepository)['total'];
-            //     $data = $cartService->getCart($session, $productsRepository)['data'];
-
-            //     $ordersDetails->setProducts($product);
-            //     $ordersDetails->setPrice($price);
-            //     $ordersDetails->setQuantity($quantity);
-            //     $ordersDetails->setName($name);
-            //     $ordersDetails->setTotal($total);
-
-            //     $order->addOrdersDetail($ordersDetails);
-
-            //     $em->persist($ordersDetails);
-            // }
-
-            // dd($order);
-            // $em->flush();
-
-            // dd($order);
         }
         ;
 
         return $this->redirectToRoute('orders_show', [
             'id' => $order->getId(),
             'order' => $order,
-            'total' => $total = $cartService->getCart($session, $productsRepository)['total'],
-            'data' => $data = $cartService->getCart($session, $productsRepository)['data'],
-
+            'total' => $total = $cartService->getCart($productsRepository)['total'],
+            'data' => $data = $cartService->getCart($productsRepository)['data'],
         ]);
     }
 
@@ -175,7 +140,6 @@ final class OrdersController extends AbstractController
     public function show(
         Orders $order,
         ProductsRepository $productsRepository,
-        SessionInterface $session,
         CartService $cartService,
     ): Response {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -192,9 +156,8 @@ final class OrdersController extends AbstractController
         return $this->render('orders/index.html.twig', [
             'id' => $order->getId(),
             'order' => $order,
-            'total' => $total = $cartService->getCart($session, $productsRepository)['total'],
-            'data' => $data = $cartService->getCart($session, $productsRepository)['data'],
-
+            'total' => $total = $cartService->getCart($productsRepository)['total'],
+            'data' => $data = $cartService->getCart($productsRepository)['data'],
         ]);
     }
 }

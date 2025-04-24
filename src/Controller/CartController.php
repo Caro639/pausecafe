@@ -18,20 +18,19 @@ final class CartController extends AbstractController
     /**
      * affiche le panier
      *
-     * @param SessionInterface $session
+     * 
      * @param ProductsRepository $productsRepository
      * @param CartService $cartService
      * @return Response
      */
     #[Route('/', name: 'index.cart', methods: ['GET', 'POST'])]
     public function index(
-        SessionInterface $session,
         ProductsRepository $productsRepository,
         CartService $cartService
     ): Response {
 
-        $data = $cartService->getCart($session, $productsRepository)['data'];
-        $total = $cartService->getCart($session, $productsRepository)['total'];
+        $data = $cartService->getCart($productsRepository)['data'];
+        $total = $cartService->getCart($productsRepository)['total'];
 
         $formOrder = $this->createForm(OrderComfirmType::class, null);
 
@@ -46,7 +45,6 @@ final class CartController extends AbstractController
     public function add(
         Products $product,
         CartService $cartService,
-        SessionInterface $session,
         Request $request
     ): Response {
         $id = $product->getId();
@@ -55,10 +53,10 @@ final class CartController extends AbstractController
             throw $this->createNotFoundException("Le produit $id introuvable !");
         }
 
-        $cartService->add($product, $session);
+        $cartService->add($product);
 
         $this->addFlash('success', 'Le produit a bien été ajouté au panier !');
-
+        // return to the current page
         // return $this->redirectToRoute('products_details', ['slug' => $product->getSlug()]);
         return $this->redirect($request->headers->get('referer') ?? $this->generateUrl('cart_index.cart'));
     }
@@ -69,13 +67,12 @@ final class CartController extends AbstractController
     #[Route('/remove/{id}', name: 'remove.cart')]
     public function remove(
         Products $product,
-        SessionInterface $session,
         CartService $cartService
     ): Response {
 
         $product->getId();
 
-        $cartService->remove($product, $session);
+        $cartService->remove($product);
         $this->addFlash('success', 'Le produit a bien été retiré du panier !');
 
         return $this->redirectToRoute('cart_index.cart');
@@ -87,13 +84,12 @@ final class CartController extends AbstractController
     #[Route('/delete/{id}', name: 'delete.cart')]
     public function delete(
         Products $product,
-        SessionInterface $session,
         CartService $cartService
     ): Response {
 
         $product->getId();
 
-        $cartService->delete($product, $session);
+        $cartService->delete($product);
         $this->addFlash('success', 'Le produit a bien été supprimé du panier !');
 
         return $this->redirectToRoute('cart_index.cart');
@@ -103,9 +99,9 @@ final class CartController extends AbstractController
      * vide le panier
      */
     #[Route('/empty', name: 'empty.cart')]
-    public function empty(SessionInterface $session): Response
+    public function empty(CartService $cartService): Response
     {
-        $session->remove('panier');
+        $cartService->clear();
 
         return $this->redirectToRoute('cart_index.cart');
     }

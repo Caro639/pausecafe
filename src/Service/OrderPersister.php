@@ -42,8 +42,8 @@ class OrderPersister
 
         $user = $this->security->getUser();
 
-        $total = $cartService->getCart($session, $productsRepository)['total'];
-        $data = $cartService->getCart($session, $productsRepository)['data'];
+        $total = $cartService->getCart($productsRepository)['total'];
+        $data = $cartService->getCart($productsRepository)['data'];
 
         foreach ($panier as $item => $quantity) {
             $ordersDetails = new OrdersDetails();
@@ -52,8 +52,8 @@ class OrderPersister
 
             $price = $product->getPrice();
             $name = $product->getName();
-            $total = $cartService->getCart($session, $productsRepository)['total'];
-            $data = $cartService->getCart($session, $productsRepository)['data'];
+            $total = $cartService->getCart($productsRepository)['total'];
+            $data = $cartService->getCart($productsRepository)['data'];
 
             $ordersDetails->setProducts($product);
             $ordersDetails->setPrice($price);

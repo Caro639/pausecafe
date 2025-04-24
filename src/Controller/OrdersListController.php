@@ -53,7 +53,7 @@ final class OrdersListController extends AbstractController
     #[Route('/orders/list/detail/{id}', name: 'app_orders_detail')]
     public function show(
         Orders $order,
-        OrdersDetailsRepository $ordersDetailsRepository
+        OrdersDetailsRepository $ordersDetailsRepository,
     ): Response {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 

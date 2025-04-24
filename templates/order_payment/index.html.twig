@@ -104,7 +104,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 } else {
                     // Le paiement a réussi
                     console.log("Paiement réussi :", result.paymentIntent.id);
-                    window.location.href = "{{ url('app_orders_detail', { id: order.id }) }}"; // Redirigez vers une page de succès
+                    window.location.href = "{{ url('order_payment_success', { id: order.id }) }}"; 
+                    //window.location.href = "{{ url('app_orders_detail', { id: order.id }) }}"; 
+                    // Redirigez vers une page de succès
                 }
             });
     });

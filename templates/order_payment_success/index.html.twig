@@ -14,6 +14,49 @@
 
 <p>Si vous avez des questions, n'hésitez pas à nous contacter.</p>
 
+ <div class="col-12">
+        <h2 class="text-center">Votre commande {{ app.user.firstname }}</h2>
+        <div class="table-responsive m-4">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Numéro</th>
+                <th scope="col">Adresse</th>
+                <th scope="col">Code Postal</th>
+                <th scope="col">Ville</th>
+                <th scope="col">Date de commande</th>
+                <th scope="col">Produits commandés</th>
+                <th scope="col">Total de la commande</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                    {{ order.id }}
+                </td>
+                <td>{{ order.address }}</td>
+                <td>{{ order.zipcode }}</td>
+                <td>{{ order.city }}</td>
+                <td>{{ order.createdAt|date('d/m/Y') }}</td>
+                <td>
+                    <ul>
+                            {% for detail in order.ordersDetails %}
+                                {% if order.id == order.id %}
+                        <li>
+                            {{ detail.name }} - {{ detail.quantity }} x {{ detail.price / 100 }} €
+                            {% endif %}       
+                    {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    {{ order.ordertotal / 100 }} €
+                </td>
+              </tr>
+            </tbody>
+          </table>
+              <a href="{{ path('products_index.products') }}" class="btn btn-dark">Continuer vos achats</a>
+      </div>
+
 </div>
   </div>
 </section>
