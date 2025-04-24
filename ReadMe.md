@@ -14,6 +14,8 @@ Composer [Composer](https://getcomposer.org/)
 
 Symfony CLI [CLI](https://symfony.com/download)
 
+Stripe CLI [CLI Stripe](https://docs.stripe.com/stripe-cli/overview)
+
 Bibliotheque de fausses donnees faker [Faker](https://fakerphp.github.io/)
 
 Envoi de mail Test avec [Mailtrap](https://mailtrap.io/)
@@ -30,7 +32,7 @@ service cartservice gestion du panier
 
 paiement CB Stripe intégration formulaire de paiement
 
-gestion des paiements webhook endpoint
+gestion des paiements webhook endpoint avec la CLI Stripe
 
 Dashboard EasyAdmin
 
