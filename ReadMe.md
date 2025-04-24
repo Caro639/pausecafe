@@ -24,6 +24,18 @@ Système d'Upload Files création du service PictureService Js retourne format w
 
 Slug sans bundle
 
+service de persistence Order
+
+service cartservice gestion du panier
+
+paiement CB Stripe intégration formulaire de paiement
+
+gestion des paiements webhook endpoint
+
+Dashboard EasyAdmin
+
+Dashboard personnalisé pour la gestion des images des produits
+
 ## Extensions VS Code
 
 Composer DEVSENSE
