@@ -41,7 +41,8 @@ class OrderComfirmType extends AbstractType
             ->add('zipcode', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Code postal'
+                    'placeholder' => 'Code postal',
+                    'pattern' => '(?:0[1-9]|[1-8]\d|9[0-8])\d{3}'
                 ],
                 'label' => 'Code postal',
                 'constraints' => [
@@ -51,7 +52,8 @@ class OrderComfirmType extends AbstractType
             ->add('city', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Ville'
+                    'placeholder' => 'Ville',
+                    'list' => 'ns'
                 ],
                 'label' => 'Ville',
                 'constraints' => [
@@ -72,10 +74,6 @@ class OrderComfirmType extends AbstractType
                 ],
                 'label' => 'Valider la commande'
             ])
-            // ->add('user', EntityType::class, [
-            //     'class' => User::class,
-            //     'choice_label' => 'id',
-            // ])
         ;
     }
 

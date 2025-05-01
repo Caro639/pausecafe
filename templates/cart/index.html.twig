@@ -2,6 +2,14 @@
 {% block title %}Panier PauseCafé{% endblock %} 
 {% block body %} 
 
+{% for label, messages in app.flashes(['success', 'warning']) %}
+		{% for message in messages %}
+			<div class="flash-{{ label }}">
+				{{ message }}
+			</div>
+		{% endfor %}
+	{% endfor %}
+
 <section class="py-5">
   <div class="container px-4 px-lg-5 mt-5">
     <div
@@ -65,7 +73,28 @@
             <hr>
             {% if app.user %}
           <h3 class="text-center">Entrez votre adresse de livraison</h3>
-           {{ form(formOrder, {'action':path('orders_add')}) }}
+           {{ form_start(formOrder, {'action':path('orders_add')}) }}
+
+           {{ form_row(formOrder.lastname) }}
+           {{ form_row(formOrder.address) }}
+           <div class="row">
+           {{ form_row(formOrder.zipcode) }}
+           </div>
+           <div class="row">
+           {{ form_row(formOrder.city) }}
+           {# <input class="form-control" list="ns" name="n"
+              id="n"
+              /> #}
+             {# <datalist id="ns">
+               <option value=>ville</option>
+               <option value=>ville</option>
+               <option value=></option>
+               <option value=></option>
+               <option value=></option>
+               <option value=></option>
+              </datalist>
+           </div> #}
+           {{ form_end(formOrder) }}
             {% else %}
             <h4 class="text-center">Connectez-vous pour valider votre commande</h4>
             <a href="{{ path('app_login') }}" class="btn btn-dark">Se connecter</a>

@@ -16,8 +16,9 @@ class Orders
 
     public const STATUS_PENDING = 'PENDING';
     public const STATUS_PAID = 'PAID';
+    public const STATUS_FAILED = 'FAILED';
     // public const STATUS_SHIPPED = 'SHIPPED';
-    // public const STATUS_CANCELED = 'CANCELED';
+    //public const STATUS_CANCELED = 'CANCELED';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

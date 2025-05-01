@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PauseCafé{% endblock %}
+
+{% block body %}
+
+<section class="py-5">
+  <div class="container px-4 px-lg-5 mt-5">
+    <div class="row">
+      <h2 class="mb-4">Votre paiement n'a pas abouti {{ app.user.firstname }}</h2>
+        <p>Votre commande n'est pas validée.</p>
+          <p>Nous vous invitons à vérifier vos informations de paiement et à réessayer.</p>
+            <div>
+            <a href="{{ path('cart_index.cart') }}" role="button" class="btn btn-dark mb-4">Votre panier</a>
+            </div>
+          <p>Si vous avez des questions, n'hésitez pas à nous contacter.</p>
+  </div>
+</section>
+
+{% endblock %}

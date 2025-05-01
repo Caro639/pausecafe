@@ -40,12 +40,25 @@ final class OrderPaymentSuccessController extends AbstractController
         // Gérez l'événement
         if ($event->type === 'payment_intent.succeeded') {
             $paymentIntent = $event->data->object; // Contient les données du PaymentIntent
-            $orderId = $paymentIntent->metadata->order_id; // Assurez-vous d'envoyer l'ID de la commande dans les métadonnées
+            $orderId = $paymentIntent->metadata->order_id; //envoyer l'ID de la commande dans les métadonnées
 
 
             if ($orderId) {
                 $order = $em->getRepository(Orders::class)->find($orderId);
                 $order->setStatus(Orders::STATUS_PAID);
+
+                $em->persist($order);
+                $em->flush();
+            }
+            return new Response('Webhook handled', 200);
+
+        } elseif ($event->type === 'payment_intent.payment_failed') {
+            $paymentIntent = $event->data->object; // Contient les données du PaymentIntent
+            $orderId = $paymentIntent->metadata->order_id; // envoyer l'ID de la commande dans les métadonnées
+
+            if ($orderId) {
+                $order = $em->getRepository(Orders::class)->find($orderId);
+                $order->setStatus(Orders::STATUS_FAILED);
 
                 $em->persist($order);
                 $em->flush();
