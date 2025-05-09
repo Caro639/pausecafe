@@ -3,12 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Orders;
+use App\Entity\Products;
 use App\Service\CartService;
 use App\Entity\OrdersDetails;
 use App\Form\OrderComfirmType;
 use App\Service\OrderPersister;
-use App\Repository\UserRepository;
-use App\Repository\ProductsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,24 +25,24 @@ final class OrdersController extends AbstractController
         $this->persister = $persister;
     }
 
+
+    #[Route('/', name: 'add')]
     /**
      * Envoie le panier de l'utilisateur connecté vers la page de validation avant paiement.
-     *
-     * @param SessionInterface $session
-     * @param ProductsRepository $productsRepository
-     * @param EntityManagerInterface $em
-     * @param CartService $cartService
-     * @param UserRepository $userRepository
-     * @return Response
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \App\Service\CartService $cartService
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \App\Entity\Products $product
+     * @throws \Exception
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    #[Route('/', name: 'add')]
     public function add(
         SessionInterface $session,
-        ProductsRepository $productsRepository,
         EntityManagerInterface $em,
         CartService $cartService,
         Request $request,
-        UserRepository $userRepository,
+        Products $product,
     ): Response {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -77,9 +76,9 @@ final class OrdersController extends AbstractController
             // enregistre bdd
             $order = new Orders();
 
-            $data = $cartService->getCart($productsRepository)['data'];
+            $data = $cartService->getCart()['data'];
 
-            $ordertotal = $cartService->getCart($productsRepository)['total'];
+            $ordertotal = $cartService->getCart()['total'];
 
 
             // $order->setPromo($promo);
@@ -105,12 +104,10 @@ final class OrdersController extends AbstractController
             $this->persister->persistOrder(
                 $order,
                 $session,
-                $productsRepository,
                 $em,
                 $cartService,
-                $userRepository,
-                $request,
                 $ordersDetails = new OrdersDetails(),
+                $product,
             );
 
             if (!$order) {
@@ -122,24 +119,20 @@ final class OrdersController extends AbstractController
         return $this->redirectToRoute('orders_show', [
             'id' => $order->getId(),
             'order' => $order,
-            'total' => $total = $cartService->getCart($productsRepository)['total'],
-            'data' => $data = $cartService->getCart($productsRepository)['data'],
+            'total' => $total = $cartService->getCart()['total'],
+            'data' => $data = $cartService->getCart()['data'],
         ]);
     }
 
-    /**
-     * Affiche la commande de l'utilisateur connecté.
-     *
-     * @param Orders $order
-     * @param ProductsRepository $productsRepository
-     * @param SessionInterface $session
-     * @param CartService $cartService
-     * @return Response
-     */
     #[Route('/{id}', name: 'show')]
+    /**
+     * affiche la commande de l'utilisateur connecté
+     * @param \App\Entity\Orders $order
+     * @param \App\Service\CartService $cartService
+     * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function show(
         Orders $order,
-        ProductsRepository $productsRepository,
         CartService $cartService,
     ): Response {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -156,8 +149,8 @@ final class OrdersController extends AbstractController
         return $this->render('orders/index.html.twig', [
             'id' => $order->getId(),
             'order' => $order,
-            'total' => $total = $cartService->getCart($productsRepository)['total'],
-            'data' => $data = $cartService->getCart($productsRepository)['data'],
+            'total' => $total = $cartService->getCart()['total'],
+            'data' => $data = $cartService->getCart()['data'],
         ]);
     }
 }

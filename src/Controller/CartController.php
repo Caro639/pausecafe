@@ -5,11 +5,9 @@ namespace App\Controller;
 use App\Entity\Products;
 use App\Service\CartService;
 use App\Form\OrderComfirmType;
-use App\Repository\ProductsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/cart', name: 'cart_')]
@@ -19,18 +17,16 @@ final class CartController extends AbstractController
      * affiche le panier
      *
      * 
-     * @param ProductsRepository $productsRepository
      * @param CartService $cartService
      * @return Response
      */
     #[Route('/', name: 'index.cart', methods: ['GET', 'POST'])]
     public function index(
-        ProductsRepository $productsRepository,
         CartService $cartService
     ): Response {
 
-        $data = $cartService->getCart($productsRepository)['data'];
-        $total = $cartService->getCart($productsRepository)['total'];
+        $data = $cartService->getCart()['data'];
+        $total = $cartService->getCart()['total'];
 
         $formOrder = $this->createForm(OrderComfirmType::class, null);
 

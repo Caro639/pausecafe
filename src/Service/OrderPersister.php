@@ -3,14 +3,12 @@
 namespace App\Service;
 
 use App\Entity\Orders;
-use App\Repository\UserRepository;
+use App\Entity\Products;
 use App\Service\CartService;
 use App\Entity\OrdersDetails;
-use App\Repository\ProductsRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class OrderPersister
 {
@@ -30,30 +28,28 @@ class OrderPersister
     public function persistOrder(
         Orders $order,
         SessionInterface $session,
-        ProductsRepository $productsRepository,
         EntityManagerInterface $em,
         CartService $cartService,
-        UserRepository $user,
-        Request $request,
         OrdersDetails $ordersDetails,
+        Products $product,
     ) {
 
         $panier = $session->get('panier', []);
 
-        $user = $this->security->getUser();
+        $this->security->getUser();
 
-        $total = $cartService->getCart($productsRepository)['total'];
-        $data = $cartService->getCart($productsRepository)['data'];
+        $total = $cartService->getCart()['total'];
+        $product = $cartService->getCart()['data'];
 
         foreach ($panier as $item => $quantity) {
             $ordersDetails = new OrdersDetails();
 
-            $product = $productsRepository->find($item);
+            $product = $this->em->getRepository(Products::class)->find($item);
 
             $price = $product->getPrice();
             $name = $product->getName();
-            $total = $cartService->getCart($productsRepository)['total'];
-            $data = $cartService->getCart($productsRepository)['data'];
+            $total = $cartService->getCart()['total'];
+            $data = $cartService->getCart()['data'];
 
             $ordersDetails->setProducts($product);
             $ordersDetails->setPrice($price);
@@ -68,6 +64,7 @@ class OrderPersister
 
         // dd($ordersDetails, $order);
         // dd($order);
+        $em->persist($order);
         $em->flush();
 
         return $order;

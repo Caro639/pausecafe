@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Orders;
 use App\Service\CartService;
-use App\Repository\ProductsRepository;
 use App\Repository\OrdersDetailsRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,14 +19,12 @@ final class OrderPaymentFailedController extends AbstractController
      * @param \App\Entity\Orders $order
      * @param \App\Repository\OrdersDetailsRepository $ordersDetailsRepository
      * @param \App\Service\CartService $cartService
-     * @param \App\Repository\ProductsRepository $productsRepository
      * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function failed(
         Orders $order,
         OrdersDetailsRepository $ordersDetailsRepository,
         CartService $cartService,
-        ProductsRepository $productsRepository,
     ): Response {
 
         $order->getId();
@@ -47,7 +44,7 @@ final class OrderPaymentFailedController extends AbstractController
             'id' => $order->getId(),
             'order' => $order,
             'ordersDetails' => $ordersDetails,
-            'cartService' => $cartService->getCart($productsRepository)['total'],
+            'cartService' => $cartService->getCart()['total'],
         ]);
     }
 }

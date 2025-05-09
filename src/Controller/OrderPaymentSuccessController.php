@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Orders;
 use App\Repository\OrdersDetailsRepository;
-use App\Repository\ProductsRepository;
 use App\Service\CartService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -81,14 +80,12 @@ final class OrderPaymentSuccessController extends AbstractController
      * @param \App\Entity\Orders $order
      * @param \App\Repository\OrdersDetailsRepository $ordersDetailsRepository
      * @param \App\Service\CartService $cartService
-     * @param \App\Repository\ProductsRepository $productsRepository
      * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function success(
         Orders $order,
         OrdersDetailsRepository $ordersDetailsRepository,
         CartService $cartService,
-        ProductsRepository $productsRepository,
     ): Response {
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -100,7 +97,7 @@ final class OrderPaymentSuccessController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        $data = $cartService->getCart($productsRepository)['data'];
+        $data = $cartService->getCart()['data'];
         if ($data) {
             $cartService->clear();
         }
@@ -115,7 +112,7 @@ final class OrderPaymentSuccessController extends AbstractController
             'id' => $order->getId(),
             'order' => $order,
             'ordersDetails' => $ordersDetails,
-            'cartService' => $cartService->getCart($productsRepository)['total'],
+            'cartService' => $cartService->getCart()['total'],
             'data' => $cartService->clear(),
         ]);
     }

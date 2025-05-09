@@ -15,15 +15,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/order/payment', name: 'order_payment_')]
 final class OrderPaymentController extends AbstractController
 {
+    #[Route('/{id}', name: 'form.order')]
     /**
      * Affiche le formulaire de paiement.
-     *
-     * @param Orders $order
-     * @param CartService $cartService
-     * @param SessionInterface $session
-     * @return Response
+     * @param \App\Entity\Orders $order
+     * @param \App\Service\CartService $cartService
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route('/{id}', name: 'form.order')]
     public function showCardForm(
         Orders $order,
         CartService $cartService,
