@@ -1,43 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}PauseCafé{% endblock %}
-
-{% block body %}
-<section class="py-5">
-<div class="container px-4 px-lg-5 mt-5">
-  <div class="col-lg-8 col-md-10 mx-auto">
-
-    <h2 class="mb-4 text-center">Payez votre commande</h2>
-     <!-- Display a payment form -->
-   <form id="payment-form">
-    <div id="card-element">
-        <!-- Stripe.js injectera ici les champs de paiement -->
-    </div>
-    <div id="card-errors" role="alert"></div>
-    <button type="submit" class="btn btn-dark mb-4">Payer</button>
-</form>
-
-</div>
-</div>
-</section>
+{% block title %}PauseCafé
 {% endblock %}
 
- {% block javascripts %}
-<script src="https://js.stripe.com/v3/"></script>
-{# <script>
-const clientSecret = "{{ clientSecret }}";
-const stripe = Stripe("{{STRIPE_PUBLISHABLE_KEY}}");
-const redirectAfterSuccessUrl = "{{ url('app_orders_detail', { id: order.id }) }}";
-</script>
-<script src="./controllers/scripts.js"></script> #}
+{% block body %}
+	<section class="py-5 vh-100">
+		<div class="container px-4 px-lg-5 mt-5">
+			<div class="col-lg-8 col-md-10 mx-auto">
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
+				<h2 class="mb-4 text-center">Payez votre commande</h2>
+				<div class="mh-100 mt-5 bg-light p-5 rounded shadow">
+					<div class="card-body">
+						<form id="payment-form">
+							<div id="card-element"></div>
+							<div id="card-errors" role="alert"></div>
+							<button type="submit" class="btn btn-dark mt-5 mb-5">Payer
+								{{ amount / 100 }}
+								€</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+	{% endblock %}
+	{% block javascripts %}
+		<script src="https://js.stripe.com/v3/"></script>
+		<script>
+		document.addEventListener(
+  "DOMContentLoaded",
+  function () {
     const clientSecret = "{{ clientSecret }}";
 
     // This is your test publishable API key.
     const stripe = Stripe(
-   "pk_test_51NsjDZKAwtwLScn28yr6BJfzodjJG3Z5LL24KicPnd6MhaEHieL95A0AdyDTHLVU7lrurpXOS8ECZUZYeojzYe9J00IpsGHrQM"
+      "pk_test_51NsjDZKAwtwLScn28yr6BJfzodjJG3Z5LL24KicPnd6MhaEHieL95A0AdyDTHLVU7lrurpXOS8ECZUZYeojzYe9J00IpsGHrQM"
     );
     console.log("Stripe", stripe);
     console.log("ClientSecret:", clientSecret);
@@ -45,72 +41,111 @@ document.addEventListener("DOMContentLoaded", function () {
     stripe
       .retrievePaymentIntent(clientSecret)
       .then(function (result) {
-        const paymentIntent = result.paymentIntent;
-        console.log("paymentIntent:", paymentIntent);
+        const paymentIntent =
+          result.paymentIntent;
+        console.log(
+          "paymentIntent:",
+          paymentIntent
+        );
       });
-
 
     const elements = stripe.elements();
 
     const card = elements.create("card", {
-        style: {
-            base: {
-                iconColor: "#c4f0ff",
-                color: "#000",
-                fontWeight: "500",
-                fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
-                fontSize: "16px",
-                fontSmoothing: "antialiased",
-                ":-webkit-autofill": { color: "#fce883" },
-                "::placeholder": { color: "#87BBFD" },
-            },
-            invalid: {
-                iconColor: "#FFC7EE",
-                color: "#FFC7EE",
-            },
+      style: {
+        base: {
+          iconColor: "black",
+          // iconColor: "#c4f0ff",
+          // color: "#382111",
+          color: "#000",
+          fontWeight: "500",
+          fontFamily:
+            "Roboto, Open Sans, Segoe UI, sans-serif",
+          fontSize: "16px",
+          fontSmoothing: "antialiased",
+          ":-webkit-autofill": {
+            color: "#fce883",
+          },
+          "::placeholder": {
+            color: "#382111",
+          },
+          // "::placeholder": { color: "#87BBFD" },
         },
+        invalid: {
+          iconColor: "#FFC7EE",
+          color: "#FFC7EE",
+        },
+      },
     });
 
     card.mount("#card-element");
 
-    document.addEventListener("DOMContentLoaded", function () {
-    console.log("Card Element:", document.getElementById("card-element"));
-});
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+        console.log(
+          "Card Element:",
+          document.getElementById("card-element")
+        );
+      }
+    );
 
     card.on("change", function (event) {
-        const button = document.querySelector("button");
-        button.disabled = event.empty;
-        const errorElement = document.getElementById("card-errors");
-        errorElement.textContent = event.error ? event.error.message : "";
+      const button =
+        document.querySelector("button");
+      button.disabled = event.empty;
+      const errorElement =
+        document.getElementById("card-errors");
+      errorElement.textContent = event.error
+        ? event.error.message
+        : "";
     });
 
-    const form = document.getElementById("payment-form");
+    const form = document.getElementById(
+      "payment-form"
+    );
 
-    form.addEventListener("submit", function (event) {
+    form.addEventListener(
+      "submit",
+      function (event) {
         event.preventDefault();
 
         stripe
-            .confirmCardPayment(clientSecret, {
-                payment_method: {
-                    card: card,
-                },
-            })
-            .then(function (result) {
-                if (result.error) {
-                    // Affichez l'erreur à l'utilisateur
-                    const errorElement = document.getElementById("card-errors");
-                    errorElement.textContent = result.error.message;
-                    console.error("Erreur de paiement :", result.error.message);
-                    window.location.href = "{{ url('order_payment_failed', { id: order.id }) }}";
-                } else {
-                    // Le paiement a réussi
-                    console.log("Paiement réussi :", result.paymentIntent.id);
-                    window.location.href = "{{ url('order_payment_success', { id: order.id }) }}"; 
-                    //window.location.href = "{{ url('app_orders_detail', { id: order.id }) }}"; 
-                    // Redirigez vers une page de succès
-                }
-            });
-    });
-});
-</script>
-{% endblock %}
+          .confirmCardPayment(clientSecret, {
+            payment_method: {
+              card: card,
+            },
+          })
+          .then(function (result) {
+            if (result.error) {
+              // Affichez l'erreur à l'utilisateur
+              const errorElement =
+                document.getElementById(
+                  "card-errors"
+                );
+              errorElement.textContent =
+                result.error.message;
+              console.error(
+                "Erreur de paiement :",
+                result.error.message
+              );
+              window.location.href =
+                "{{ url('order_payment_failed', { id: order.id }) }}";
+            } else {
+              // Le paiement a réussi
+              console.log(
+                "Paiement réussi :",
+                result.paymentIntent.id
+              );
+              window.location.href =
+                "{{ url('order_payment_success', { id: order.id }) }}";
+              // window.location.href = "{{ url('app_orders_detail', { id: order.id }) }}";
+              // Redirigez vers une page de succès
+            }
+          });
+      }
+    );
+  }
+);
+		</script>
+	{% endblock %}
