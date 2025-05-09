@@ -14,6 +14,14 @@ final class OrderPaymentFailedController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
     #[Route('/order/payment/failed/{id}', name: 'order_payment_failed')]
+    /**
+     * payment failed
+     * @param \App\Entity\Orders $order
+     * @param \App\Repository\OrdersDetailsRepository $ordersDetailsRepository
+     * @param \App\Service\CartService $cartService
+     * @param \App\Repository\ProductsRepository $productsRepository
+     * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function failed(
         Orders $order,
         OrdersDetailsRepository $ordersDetailsRepository,

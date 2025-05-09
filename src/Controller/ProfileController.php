@@ -13,6 +13,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 final class ProfileController extends AbstractController
 {
     #[Route('/{id}', name: 'index.profile')]
+    /**
+     * page profil
+     * @param \App\Repository\UserRepository $userRepository
+     * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function index(UserRepository $userRepository): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -30,9 +35,4 @@ final class ProfileController extends AbstractController
             'user' => $userRepository->findOneBy(['id' => $user->getId()]),
         ]);
     }
-
-    // #[Route('/commandes', name: 'orders')]
-    // public function orders(
-
-    // }
 }

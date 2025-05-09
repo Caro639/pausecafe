@@ -14,6 +14,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 final class ProductsController extends AbstractController
 {
     #[Route('/', name: 'index.products')]
+    /**
+     * affiche les produits
+     * @param \App\Repository\CategoriesRepository $categoriesRepository
+     * @return Response
+     */
     public function index(CategoriesRepository $categoriesRepository): Response
     {
 
@@ -24,6 +29,14 @@ final class ProductsController extends AbstractController
 
 
     #[Route('/{slug}', name: 'details')]
+    /**
+     * product details
+     * @param mixed $slug
+     * @param \App\Entity\Products $product
+     * @param \App\Repository\ProductsRepository $repository
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return Response
+     */
     public function details($slug, Products $product, ProductsRepository $repository, Request $request): Response
     {
         // dd($request->attributes);

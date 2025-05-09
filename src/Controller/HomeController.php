@@ -11,6 +11,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 final class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home', methods: ['GET'])]
+    /**
+     * Summary of index
+     * @param \App\Repository\ProductsRepository $repository
+     * @param \App\Entity\Products $product
+     * @return Response
+     */
     public function index(ProductsRepository $repository, Products $product): Response
     {
 

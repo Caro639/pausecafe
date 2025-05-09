@@ -51,6 +51,12 @@ final class OrdersListController extends AbstractController
 
 
     #[Route('/orders/list/detail/{id}', name: 'app_orders_detail')]
+    /**
+     * order of show
+     * @param \App\Entity\Orders $order
+     * @param \App\Repository\OrdersDetailsRepository $ordersDetailsRepository
+     * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function show(
         Orders $order,
         OrdersDetailsRepository $ordersDetailsRepository,

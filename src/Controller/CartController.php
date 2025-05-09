@@ -42,6 +42,13 @@ final class CartController extends AbstractController
     }
 
     #[Route('/add/{id}', name: 'add.cart', condition: "params['id']")]
+    /**
+     * ajoute un produit au panier
+     * @param \App\Entity\Products $product
+     * @param \App\Service\CartService $cartService
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function add(
         Products $product,
         CartService $cartService,
@@ -65,6 +72,12 @@ final class CartController extends AbstractController
      * retire un produit du panier
      */
     #[Route('/remove/{id}', name: 'remove.cart')]
+    /**
+     * Summary of remove
+     * @param \App\Entity\Products $product
+     * @param \App\Service\CartService $cartService
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function remove(
         Products $product,
         CartService $cartService
@@ -82,6 +95,12 @@ final class CartController extends AbstractController
      * supprime un produit du panier
      */
     #[Route('/delete/{id}', name: 'delete.cart')]
+    /**
+     * Summary of delete
+     * @param \App\Entity\Products $product
+     * @param \App\Service\CartService $cartService
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function delete(
         Products $product,
         CartService $cartService
@@ -95,10 +114,12 @@ final class CartController extends AbstractController
         return $this->redirectToRoute('cart_index.cart');
     }
 
-    /**
-     * vide le panier
-     */
     #[Route('/empty', name: 'empty.cart')]
+    /**
+     * Summary of empty
+     * @param \App\Service\CartService $cartService
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function empty(CartService $cartService): Response
     {
         $cartService->clear();

@@ -14,6 +14,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 final class CategoriesController extends AbstractController
 {
     #[Route('/{slug}', name: 'list')]
+    /**
+     * Summary of list
+     * @param string $slug
+     * @param \App\Repository\CategoriesRepository $repository
+     * @param \App\Repository\ProductsRepository $productsRepository
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return Response
+     */
     public function list(
         string $slug,
         CategoriesRepository $repository,

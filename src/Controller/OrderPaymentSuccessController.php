@@ -16,6 +16,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 final class OrderPaymentSuccessController extends AbstractController
 {
     #[Route('/stripe/webhook', name: 'webhook', methods: ['POST'])]
+    /**
+     * gestion payment stripeWebhook
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \App\Entity\Orders $order
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @return Response
+     */
     public function stripeWebhook(
         Request $request,
         Orders $order,
@@ -69,6 +76,14 @@ final class OrderPaymentSuccessController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/order/payment/success/{id}', name: 'order_payment_success')]
+    /**
+     * page of success payment
+     * @param \App\Entity\Orders $order
+     * @param \App\Repository\OrdersDetailsRepository $ordersDetailsRepository
+     * @param \App\Service\CartService $cartService
+     * @param \App\Repository\ProductsRepository $productsRepository
+     * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function success(
         Orders $order,
         OrdersDetailsRepository $ordersDetailsRepository,
