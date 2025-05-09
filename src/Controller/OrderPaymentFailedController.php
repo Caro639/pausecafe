@@ -8,6 +8,7 @@ use App\Repository\ProductsRepository;
 use App\Repository\OrdersDetailsRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class OrderPaymentFailedController extends AbstractController

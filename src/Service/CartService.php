@@ -12,9 +12,12 @@ class CartService
     private RequestStack $request;
     private SessionInterface $session;
 
-    public function __construct(RequestStack $request)
+    protected ProductsRepository $productsRepository;
+
+    public function __construct(RequestStack $request, ProductsRepository $productsRepository)
     {
         $this->session = $request->getSession();
+        $this->productsRepository = $productsRepository;
     }
 
     protected function saveCart(array $panier): void
@@ -43,7 +46,7 @@ class CartService
         $this->session->set('panier', $panier);
     }
 
-    public function getCart(ProductsRepository $productsRepository)
+    public function getCart()
     {
         // Get the cart
         $panier = $this->session->get('panier', []);
@@ -52,7 +55,7 @@ class CartService
         $total = 0;
 
         foreach ($panier as $id => $quantity) {
-            $product = $productsRepository->find($id);
+            $product = $this->productsRepository->find($id);
 
             $data[] = [
                 'product' => $product,

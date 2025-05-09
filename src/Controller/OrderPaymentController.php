@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Orders;
 use Stripe\StripeClient;
 use App\Service\CartService;
-use App\Repository\ProductsRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -22,15 +21,13 @@ final class OrderPaymentController extends AbstractController
      * @param Orders $order
      * @param CartService $cartService
      * @param SessionInterface $session
-     * @param ProductsRepository $productsRepository
      * @return Response
      */
     #[Route('/{id}', name: 'form.order')]
     public function showCardForm(
         Orders $order,
         CartService $cartService,
-        SessionInterface $session,
-        ProductsRepository $productsRepository
+        SessionInterface $session
     ): Response {
 
         $order->getId();
@@ -40,9 +37,9 @@ final class OrderPaymentController extends AbstractController
 
         $stripe = new StripeClient($_ENV['STRIPE_SECRET_KEY']);
 
-        $total = $cartService->getCart($productsRepository)['total'];
+        $total = $cartService->getCart()['total'];
 
-        $data = $cartService->getCart($productsRepository)['data'];
+        $data = $cartService->getCart()['data'];
 
         $paymentIntent = $stripe->paymentIntents->create([
             'amount' => $total,
