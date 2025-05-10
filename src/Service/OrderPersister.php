@@ -61,7 +61,6 @@ class OrderPersister
 
             $em->persist($ordersDetails);
         }
-
         // dd($ordersDetails, $order);
         // dd($order);
         $em->persist($order);

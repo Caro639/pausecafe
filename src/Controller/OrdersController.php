@@ -81,6 +81,8 @@ final class OrdersController extends AbstractController
             $ordertotal = $cartService->getCart()['total'];
 
 
+
+
             // $order->setPromo($promo);
             $order->setUser($user);
 
@@ -110,23 +112,23 @@ final class OrdersController extends AbstractController
                 $product,
             );
 
-            if (!$order) {
-                throw new \Exception('La commande n\'a pas pu être validée.');
-            }
+            // if (!$order) {
+            //     throw new \Exception('La commande n\'a pas pu être validée.');
+            // }
         }
         ;
 
         return $this->redirectToRoute('orders_show', [
             'id' => $order->getId(),
             'order' => $order,
-            'total' => $total = $cartService->getCart()['total'],
+            'total' => $cartService->getCart()['total'],
             'data' => $data = $cartService->getCart()['data'],
         ]);
     }
 
     #[Route('/{id}', name: 'show')]
     /**
-     * affiche la commande de l'utilisateur connecté
+     * affiche la commande à payer
      * @param \App\Entity\Orders $order
      * @param \App\Service\CartService $cartService
      * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -149,8 +151,8 @@ final class OrdersController extends AbstractController
         return $this->render('orders/index.html.twig', [
             'id' => $order->getId(),
             'order' => $order,
-            'total' => $total = $cartService->getCart()['total'],
-            'data' => $data = $cartService->getCart()['data'],
+            'total' => $cartService->getCart()['total'],
+            'data' => $cartService->getCart()['data'],
         ]);
     }
 }

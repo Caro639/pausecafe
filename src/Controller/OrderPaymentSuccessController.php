@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Orders;
-use App\Repository\OrdersDetailsRepository;
 use App\Service\CartService;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Event\OrderSuccessEvent;
+use App\Repository\OrdersDetailsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Psr\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -86,6 +88,7 @@ final class OrderPaymentSuccessController extends AbstractController
         Orders $order,
         OrdersDetailsRepository $ordersDetailsRepository,
         CartService $cartService,
+        EventDispatcher $dispatcher,
     ): Response {
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -103,6 +106,11 @@ final class OrderPaymentSuccessController extends AbstractController
         }
 
         $ordersDetails = $ordersDetailsRepository->findBy(['orders' => $order]);
+
+        // event pour déclencher actions apres payment success
+        $orderEvent = new OrderSuccessEvent($order);
+        $dispatcher->dispatch($orderEvent);
+
 
         $this->addFlash('success', 'Votre paiement a été validée avec succès !');
 
