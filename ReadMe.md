@@ -16,7 +16,7 @@ Symfony CLI [CLI](https://symfony.com/download)
 
 Stripe CLI [CLI Stripe](https://docs.stripe.com/stripe-cli/overview)
 
-Bibliotheque de fausses donnees faker [Faker](https://fakerphp.github.io/)
+Bibliothèque de fausses donnees faker [Faker](https://fakerphp.github.io/)
 
 Envoi de mail Test avec [Mailtrap](https://mailtrap.io/)
 
@@ -30,9 +30,11 @@ Service envoi de mail
 
 CreatedAt Trait Entity
 
-service de persistence Order
+service CartService gestion du panier
 
-service cartservice gestion du panier
+CartSubscriber et variable globale twig = ajout du total de produits ajoutés au panier du menu
+
+service de persistence Order
 
 service Stripe paymentIntent
 
@@ -44,11 +46,11 @@ Création OrderSuccessEvent EventDispatcher
 
 Création OrderSuccessEmailSubscriber EventSubscriberInterface
 
-Event et Subscriber = Envoi un mail de validation de la commande payée
+Event OrderSuccess et Subscriber OrderSuccessEmail = Envoi un mail de validation de la commande payée
 
 Dashboard EasyAdmin
 
-Dashboard personnalisé pour la gestion des images des produits
+Dashboard personnalisé pour une gestion des produits adaptés au service image
 
 ## Extensions VS Code
 

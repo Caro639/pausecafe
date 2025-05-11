@@ -97,4 +97,18 @@ class CartService
 
         $this->session->set('panier', $panier);
     }
+
+    public function getTotalQuantity(): int
+    {
+        $panier = $this->session->get('panier', []);
+        $totalQuantity = 0;
+
+        foreach ($panier as $id => $quantity) {
+            $product = $this->productsRepository->find($id);
+            if ($product) {
+                $totalQuantity += $quantity;
+            }
+        }
+        return $totalQuantity;
+    }
 }

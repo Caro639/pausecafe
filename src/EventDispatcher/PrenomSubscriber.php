@@ -8,7 +8,7 @@ class PrenomSubscriber
 {
     public function addPrenomToAttributes(RequestEvent $requestEvent)
     {
-        dd($requestEvent);
+        // dd($requestEvent);
 
     }
 }
