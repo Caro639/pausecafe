@@ -34,11 +34,13 @@ service de persistence Order
 
 service cartservice gestion du panier
 
+service Stripe paymentIntent
+
 paiement CB Stripe intégration formulaire de paiement
 
 gestion des paiements webhook endpoint avec la CLI Stripe
 
-Création OderSuccessEvent EventDispatcher
+Création OrderSuccessEvent EventDispatcher
 
 Création OrderSuccessEmailSubscriber EventSubscriberInterface
 
