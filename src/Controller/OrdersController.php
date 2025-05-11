@@ -111,10 +111,6 @@ final class OrdersController extends AbstractController
                 $ordersDetails = new OrdersDetails(),
                 $product,
             );
-
-            // if (!$order) {
-            //     throw new \Exception('La commande n\'a pas pu être validée.');
-            // }
         }
         ;
 

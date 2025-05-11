@@ -29,7 +29,7 @@ services:
       [
         {
           name: kernel.event_listener,
-          event: kernel.request,
+          event: order.success,
           method: getOrder,
         },
       ]

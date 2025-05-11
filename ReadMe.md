@@ -24,7 +24,11 @@ Vérification utilisateur json token JWT [JWT](https://jwt.io/)
 
 Système d'Upload Files création du service PictureService Js retourne format webp + thumbnail
 
-Slug sans bundle
+Slug sans bundle Trait Entity
+
+Service envoi de mail
+
+CreatedAt Trait Entity
 
 service de persistence Order
 
@@ -33,6 +37,12 @@ service cartservice gestion du panier
 paiement CB Stripe intégration formulaire de paiement
 
 gestion des paiements webhook endpoint avec la CLI Stripe
+
+Création OderSuccessEvent EventDispatcher
+
+Création OrderSuccessEmailSubscriber EventSubscriberInterface
+
+Event et Subscriber = Envoi un mail de validation de la commande payée
 
 Dashboard EasyAdmin
 
@@ -60,6 +70,6 @@ Symfony Console
 
 Twig Code Snippets
 
-Twig Language 2
+Twig Language
 
 YAML Red Hat

@@ -7,10 +7,10 @@ use App\Service\CartService;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Event\OrderSuccessEvent;
 use App\Repository\OrdersDetailsRepository;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Psr\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -31,7 +31,7 @@ final class OrderPaymentSuccessController extends AbstractController
     ): Response {
         $payload = $request->getContent();
         $sigHeader = $request->headers->get('stripe-signature');
-        $endpointSecret = ($_ENV['WEBHOOK_SIGNING_SECRET']);
+        $endpointSecret = $_ENV['WEBHOOK_SIGNING_SECRET'];
 
         try {
             $event = \Stripe\Webhook::constructEvent($payload, $sigHeader, $endpointSecret);
@@ -88,7 +88,7 @@ final class OrderPaymentSuccessController extends AbstractController
         Orders $order,
         OrdersDetailsRepository $ordersDetailsRepository,
         CartService $cartService,
-        EventDispatcher $dispatcher,
+        EventDispatcherInterface $dispatcher,
     ): Response {
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -109,7 +109,7 @@ final class OrderPaymentSuccessController extends AbstractController
 
         // event pour déclencher actions apres payment success
         $orderEvent = new OrderSuccessEvent($order);
-        $dispatcher->dispatch($orderEvent);
+        $dispatcher->dispatch($orderEvent, 'order.success');
 
 
         $this->addFlash('success', 'Votre paiement a été validée avec succès !');

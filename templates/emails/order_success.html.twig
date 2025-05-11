@@ -1,0 +1,45 @@
+<h1>Votre commande n° {{ order.id }}</h1>
+<h2 class="text-center">
+  Merci pour votre commande {{ app.user.firstname }}
+</h2>
+<p>Nous vous remercions pour votre confiance.</p>
+<p>Voici le récapitulatif de votre commande :</p>
+<div class="table-responsive m-4">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Numéro</th>
+        <th scope="col">Adresse</th>
+        <th scope="col">Code Postal</th>
+        <th scope="col">Ville</th>
+        <th scope="col">Date de commande</th>
+        <th scope="col">Produits commandés</th>
+        <th scope="col">Total de la commande</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.address }}</td>
+        <td>{{ order.zipcode }}</td>
+        <td>{{ order.city }}</td>
+        <td>
+          {{ order.createdAt|date('d/m/Y') }}
+        </td>
+        <td>
+          <ul>
+            {% for detail in order.ordersDetails %} 
+				{% if order.id == order.id %}
+            <li>
+              {{ detail.name }} - {{ detail.quantity }} x {{ detail.price / 100 }} €
+            </li>
+            	{% endif %} 
+			{% endfor %}
+          </ul>
+        </td>
+        <td>{{ order.ordertotal / 100 }} €</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p>Nous vous enverrons un email lorsque votre commande sera expédiée.</p>

@@ -7,7 +7,6 @@ use App\Entity\Products;
 use App\Service\CartService;
 use App\Entity\OrdersDetails;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class OrderPersister
@@ -17,9 +16,8 @@ class OrderPersister
     protected $cartService;
 
     public function __construct(
-        private Security $security,
         EntityManagerInterface $em,
-        CartService $cartService
+        CartService $cartService,
     ) {
         $this->em = $em;
         $this->cartService = $cartService;
@@ -35,8 +33,6 @@ class OrderPersister
     ) {
 
         $panier = $session->get('panier', []);
-
-        $this->security->getUser();
 
         $total = $cartService->getCart()['total'];
         $product = $cartService->getCart()['data'];
