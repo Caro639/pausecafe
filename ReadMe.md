@@ -22,6 +22,8 @@ Envoi de mail Test avec [Mailtrap](https://mailtrap.io/)
 
 Vérification utilisateur json token JWT [JWT](https://jwt.io/)
 
+Schéma de la BDD [BDD PauseCafé](./assets/styles/image/schema_bdd_pausecafe.png)
+
 Système d'Upload Files création du service PictureService Js retourne format webp + thumbnail
 
 Slug sans bundle Trait Entity

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Orders;
 use App\Service\CartService;
 use App\Repository\OrdersDetailsRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -19,12 +20,14 @@ final class OrderPaymentFailedController extends AbstractController
      * @param \App\Entity\Orders $order
      * @param \App\Repository\OrdersDetailsRepository $ordersDetailsRepository
      * @param \App\Service\CartService $cartService
+     * @param \Doctrine\ORM\EntityManagerInterface $manager
      * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function failed(
         Orders $order,
         OrdersDetailsRepository $ordersDetailsRepository,
         CartService $cartService,
+        EntityManagerInterface $manager
     ): Response {
 
         $order->getId();
@@ -37,6 +40,9 @@ final class OrderPaymentFailedController extends AbstractController
         $ordersDetails = $ordersDetailsRepository->findBy(['orders' => $order]);
 
         $this->addFlash('error', 'Votre paiement a échoué !');
+
+        $manager->remove($order);
+        $manager->flush();
 
 
         // return $this->redirectToRoute('app_home');
