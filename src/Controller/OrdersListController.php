@@ -35,9 +35,9 @@ final class OrdersListController extends AbstractController
             $this->addFlash('error', 'Aucune commande trouvée !');
             return $this->redirectToRoute('app_home');
         }
-        $user->getOrders();
+        // $user->getOrders();
 
-        $orders = $ordersRepository->findBy(['user' => $user]);
+        $orders = $ordersRepository->findBy(['user' => $user], ['created_at' => 'DESC']);
 
         $ordersDetails = $ordersDetailsRepository->findBy(['orders' => $orders]);
 

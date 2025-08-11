@@ -1,0 +1,14 @@
+{# {{ form_errors(searchDataForm) }} #}
+
+<nav class="navbar bg-body-tertiary mb-5 mt-5">
+	<div
+		class="container d-flex justify-content-center">
+		{# {{ form_start(searchDataForm, {'attr': {'class': 'd-flex', 'role': 'search', 'style': 'max-width: 500px; width: 100%;'}}) }}
+						{{ form_widget(searchDataForm.q, {'attr': {'class': 'form-control me-2', 'placeholder': 'Rechercher un café...', 'aria-label': 'Search'}}) }} #}
+		<button class="btn btn-sm" type="submit" id="search-bar">
+			<i class="bi bi-search"></i>
+			Rechercher
+		</button>
+		{# {{ form_end(searchDataForm) }} #}
+	</div>
+</nav>

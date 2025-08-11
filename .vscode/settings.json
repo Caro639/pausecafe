@@ -4,5 +4,6 @@
     "javascripts",
     "jwtsecret",
     "stylesheet"
-  ]
+  ],
+  "editor.defaultFormatter": null
 }

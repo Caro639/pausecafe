@@ -1,59 +1,45 @@
-{% extends 'base.html.twig' %} 
-{% block title %}Hello ProductsController!{% endblock %} 
-{% block body %} 
+{% extends 'base.html.twig' %}
+{% block title %}Tous nos produits
+{% endblock %}
+{% block body %}
 
-<section class="py-5">
-  <div class="container px-4 px-lg-5 mt-5">
-    <div
-      class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
-    >
-      <div class="col-12">
-        <h2>Catégories de cafés</h2>
-      </div>
-      {% for category in categories %} {% if
+	<section class="py-5">
+		<div class="container px-4 px-lg-5 mt-5">
+			<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+				<div class="col-12">
+					<h2>Catégories de cafés</h2>
+				</div>
+				{% for category in categories %}
+					{% if
       category.parent == null %}
-      <div class="col-12">
-        <a
-          href="{{ path('categories_list', {slug: category.slug}) }}"
-          >{{ category.name }}</a
-        >
-      </div>
-      {% else %}
-      <div class="col mb-5">
-        <div class="card h-100">
-          <img
-            class="card-img-top"
-            src="{{ asset('images/products-1.webp') }}"
-            alt="photo du café"
-          />
+						<div class="col-12">
+							<a href="{{ path('categories_list', {slug: category.slug}) }}">{{ category.name }}</a>
+						</div>
+					{% else %}
+						<div class="col mb-5">
+							<div class="card h-100">
+								<img class="card-img-top" src="{{ asset('images/products-1.webp') }}" alt="photo du café"/>
 
-          <div class="card-body p-4">
-            <div class="text-center">
-              <h3 class="fw-bolder">
-                {{ category.name }}
-              </h3>
-            </div>
-          </div>
+								<div class="card-body p-4">
+									<div class="text-center">
+										<h3 class="fw-bolder">
+											{{ category.name }}
+										</h3>
+									</div>
+								</div>
 
-          <div
-            class="card-footer p-4 pt-0 border-top-0 bg-transparent"
-          >
-            <div class="text-center">
-              <a
-                class="btn mt-auto"
-                href="{{ path('categories_list', {slug: category.slug}) }}"
-                role="button" style="background-color: #fb986c"
-                >View options</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-      {% endif %}
-      {% endfor %}
-       {# <div class="col-12">{{ dump()}}</div> #}
-     
-    </div>
-  </div>
-</section>
+								<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+									<div class="text-center">
+										<a class="btn mt-auto" href="{{ path('categories_list', {slug: category.slug}) }}" role="button" style="background-color: #fb986c">View options</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endif %}
+				{% endfor %}
+				{# <div class="col-12">{{ dump()}}</div> #}
+
+			</div>
+		</div>
+	</section>
 {% endblock %}

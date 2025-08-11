@@ -12,13 +12,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/profil', name: 'profile_')]
 final class ProfileController extends AbstractController
 {
+    public function __construct(
+        private UserRepository $userRepository
+    ) {
+        // Inject dependencies if needed
+    }
+
     #[Route('/{id}', name: 'index.profile')]
     /**
      * page profil
      * @param \App\Repository\UserRepository $userRepository
      * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(string $id): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -26,13 +32,15 @@ final class ProfileController extends AbstractController
         if ($user === null) {
             return $this->redirectToRoute('app_login');
         }
-        $user = $userRepository->findOneBy(['id' => $user->getId()]);
+        // $user = $userRepository->findOneBy(['id' => $user->getId()]);
+        $userId = $this->userRepository->findOneBy(['id' => $id]);
         if ($user === null) {
             throw $this->createNotFoundException('Utilisateur non trouvé.');
         }
 
         return $this->render('profile/index.html.twig', [
-            'user' => $userRepository->findOneBy(['id' => $user->getId()]),
+            // 'user' => $userRepository->findOneBy(['id' => $user->getId()]),
+            'user' => $userId,
         ]);
     }
 }

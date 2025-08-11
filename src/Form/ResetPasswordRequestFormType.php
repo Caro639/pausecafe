@@ -5,6 +5,7 @@ namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class ResetPasswordRequestFormType extends AbstractType
@@ -12,12 +13,18 @@ class ResetPasswordRequestFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('password', PasswordType::class, [
-                'label' => 'Entrez votre mot de passe',
+            ->add('email', EmailType::class, [
+                'label' => 'Adresse email',
                 'attr' => [
-                    'class' => 'form-control',
+                    'placeholder' => 'Entrez votre adresse email',
                 ],
             ])
+            // ->add('password', PasswordType::class, [
+            //     'label' => 'Entrez votre mot de passe',
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //     ],
+            // ])
         ;
     }
 

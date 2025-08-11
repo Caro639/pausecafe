@@ -165,6 +165,9 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
+        /** @var User $user */
+        $user = $this->getUser();
+
         if ($user->getIsVerified()) {
             $this->addFlash(
                 'warning',
