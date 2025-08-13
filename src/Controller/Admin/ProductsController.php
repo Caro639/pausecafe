@@ -21,6 +21,8 @@ class ProductsController extends AbstractController
     #[Route('/', name: 'index.admin')]
     public function index(ProductsRepository $productsRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_PRODUCT_ADMIN');
+
         $produits = $productsRepository->findAll();
         return $this->render('admin/products/index.html.twig', [
             'produits' => $produits,
@@ -34,7 +36,7 @@ class ProductsController extends AbstractController
         SluggerInterface $slugger,
         PictureService $pictureService
     ): Response {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_PRODUCT_ADMIN');
 
         $product = new Products();
         $productForm = $this->createForm(ProductsFormType::class, $product);

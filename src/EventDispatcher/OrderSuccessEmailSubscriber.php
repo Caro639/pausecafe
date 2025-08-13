@@ -47,7 +47,7 @@ class OrderSuccessEmailSubscriber implements EventSubscriberInterface
 
         $this->mail->send(
             'no-reply@pausecafe.fr',
-            $user->getEmail(),
+            $user->getUserIdentifier(),
             "Votre commande n° {$orderId} a bien été validée",
             'order_success',
             [

@@ -1,14 +1,92 @@
-{# {{ form_errors(searchDataForm) }} #}
+{# templates/partials/_searchbar.html.twig #}
+{{ form_errors(searchDataForm) }}
 
 <nav class="navbar bg-body-tertiary mb-5 mt-5">
-	<div
-		class="container d-flex justify-content-center">
-		{# {{ form_start(searchDataForm, {'attr': {'class': 'd-flex', 'role': 'search', 'style': 'max-width: 500px; width: 100%;'}}) }}
-						{{ form_widget(searchDataForm.q, {'attr': {'class': 'form-control me-2', 'placeholder': 'Rechercher un café...', 'aria-label': 'Search'}}) }} #}
-		<button class="btn btn-sm" type="submit" id="search-bar">
-			<i class="bi bi-search"></i>
-			Rechercher
-		</button>
-		{# {{ form_end(searchDataForm) }} #}
+	<div class="container">
+		{{ form_start(searchDataForm, {'attr': {'class': 'w-100'}}) }}
+
+		{# Barre de recherche principale #}
+		<div class="row justify-content-center mb-3">
+			<div class="col-lg-8 col-md-10">
+				<div class="input-group input-group-lg">
+					{{ form_widget(searchDataForm.q, {
+                        'attr': {
+                            'class': 'form-control', 
+                            'placeholder': 'Rechercher un café...', 
+                            'aria-label': 'Search'
+                        }
+                    }) }}
+					<button class="btn mt-auto" type="submit" id="search-bar" style="background-color: #fb986c">
+						<i class="bi bi-search"></i>
+						{# Rechercher #}
+					</button>
+					<button class="btn btn-outline-dark" type="button" data-bs-toggle="collapse" data-bs-target="#searchFilters" aria-expanded="false" aria-controls="searchFilters">
+						<i class="bi bi-funnel"></i>
+						Filtres
+					</button>
+				</div>
+			</div>
+		</div>
+
+		{# Filtres pliables #}
+		<div class="collapse" id="searchFilters">
+			<div class="row justify-content-center">
+				<div class="col-lg-8 col-md-10">
+					<div class="card">
+						<div class="card-body">
+							<div
+								class="row g-3">
+								{# Filtre Catégorie #}
+								<div class="col-md-6">
+									{{ form_row(searchDataForm.category, {
+                                        'attr': {'class': 'form-select'},
+                                        'label_attr': {'class': 'form-label fw-bold'}
+                                    }) }}
+								</div>
+
+								{# Filtre Prix #}
+								<div class="col-md-6">
+									<label class="form-label fw-bold">Prix</label>
+									<div class="row">
+										<div class="col-6">
+											{{ form_widget(searchDataForm.min, {
+                                                'attr': {
+                                                    'class': 'form-control', 
+                                                    'placeholder': 'Min €',
+                                                    'step': '0.01'
+                                                }
+                                            }) }}
+										</div>
+										<div class="col-6">
+											{{ form_widget(searchDataForm.max, {
+                                                'attr': {
+                                                    'class': 'form-control', 
+                                                    'placeholder': 'Max €',
+                                                    'step': '0.01'
+                                                }
+                                            }) }}
+										</div>
+									</div>
+								</div>
+
+								{# Filtre Promo #}
+								<div class="col-12">
+									<div class="form-check form-switch">
+										{{ form_widget(searchDataForm.promo, {
+                                            'attr': {'class': 'form-check-input'}
+                                        }) }}
+										<label class="form-check-label fw-bold" for="{{ searchDataForm.promo.vars.id }}">
+											Afficher uniquement les promotions
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{{ form_end(searchDataForm) }}
 	</div>
 </nav>

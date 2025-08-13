@@ -10,7 +10,7 @@
 		<meta
 		name="viewport" content="width=device-width, initial-scale=1">
 		{# <meta name="description" content="" />
-		        <meta name="author" content="" /> #}
+				        <meta name="author" content="" /> #}
 
 		{% block stylesheets %}
 
@@ -32,15 +32,14 @@
 	<body>
 		{{ include ('partials/_nav.html.twig') }}
 		{{ include ('partials/_header.html.twig') }}
-		{{ include ('partials/_searchbar.html.twig') }}
 
 
 		{# {% if app.user %}
-		    {{ dump(app.user) }}
-		    {{ dump(app.user.isVerified) }}
-		{% else %}
-		    <p>Aucun utilisateur connecté.</p>
-		{% endif %} #}
+				    {{ dump(app.user) }}
+				    {{ dump(app.user.isVerified) }}
+				{% else %}
+				    <p>Aucun utilisateur connecté.</p>
+				{% endif %} #}
 
 		{% if app.user and app.user.isVerified == false %}
 			<div class="alert alert-warning alert-dismissible" role="alert">
@@ -48,11 +47,11 @@
 				<div class="alert-message">
 					<strong>Bonjour ! Votre compte n'est pas activé</strong>,
 					<a href="{{ path('resend_verif') }}">cliquez ici pour
-						                    renvoyer le lien d'activation si vous ne l'avez pas reçu.</a>
+												                    renvoyer le lien d'activation si vous ne l'avez pas reçu.</a>
 				</div>
 			</div>
 			{# {{ dump(app.user) }}
-			    {{ dump(app.user.isVerified) }} #}
+						    {{ dump(app.user.isVerified) }} #}
 		{% endif %}
 		{{ include ('partials/_flash.html.twig') }}
 

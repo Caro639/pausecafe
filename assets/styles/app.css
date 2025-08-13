@@ -49,3 +49,21 @@ header {
 .fw-normal {
   font-weight: 500 !important;
 }
+
+/* searchbar */
+.navbar .form-floating > label {
+  font-size: 0.875rem;
+}
+
+.form-check-switch .form-check-input {
+  cursor: pointer;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#searchFilters {
+  margin-top: 1rem;
+}
