@@ -100,6 +100,8 @@ final class OrderPaymentSuccessController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
+
+
         $data = $cartService->getCart()['data'];
         if ($data) {
             $cartService->clear();

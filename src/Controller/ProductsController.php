@@ -2,10 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Products;
 use App\Repository\ProductsRepository;
 use App\Repository\CategoriesRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,12 +30,10 @@ final class ProductsController extends AbstractController
     /**
      * product details
      * @param mixed $slug
-     * @param \App\Entity\Products $product
      * @param \App\Repository\ProductsRepository $repository
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return Response
      */
-    public function details($slug, Products $product, ProductsRepository $repository, Request $request): Response
+    public function details($slug, ProductsRepository $repository): Response
     {
         // dd($request->attributes);
         $product = $repository->findOneBy(['slug' => $slug]);

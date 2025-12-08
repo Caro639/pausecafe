@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Orders;
-use App\Entity\Products;
 use App\Service\CartService;
 use App\Entity\OrdersDetails;
 use App\Form\OrderComfirmType;
@@ -18,13 +17,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/orders', name: 'orders_')]
 final class OrdersController extends AbstractController
 {
-    protected OrderPersister $persister;
 
-    public function __construct(OrderPersister $persister)
+    public function __construct(protected OrderPersister $persister)
     {
-        $this->persister = $persister;
     }
-
 
     #[Route('/', name: 'add')]
     /**
@@ -42,7 +38,6 @@ final class OrdersController extends AbstractController
         EntityManagerInterface $em,
         CartService $cartService,
         Request $request,
-        Products $product,
     ): Response {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -76,7 +71,7 @@ final class OrdersController extends AbstractController
             // enregistre bdd
             $order = new Orders();
 
-            $data = $cartService->getCart()['data'];
+            $cartService->getCart()['data'];
 
             $ordertotal = $cartService->getCart()['total'];
 
@@ -106,10 +101,7 @@ final class OrdersController extends AbstractController
             $this->persister->persistOrder(
                 $order,
                 $session,
-                $em,
-                $cartService,
                 $ordersDetails = new OrdersDetails(),
-                $product,
             );
         }
         ;
@@ -118,7 +110,7 @@ final class OrdersController extends AbstractController
             'id' => $order->getId(),
             'order' => $order,
             'total' => $cartService->getCart()['total'],
-            'data' => $data = $cartService->getCart()['data'],
+            'data' => $cartService->getCart()['data'],
         ]);
     }
 

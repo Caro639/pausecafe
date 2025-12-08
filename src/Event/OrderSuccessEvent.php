@@ -8,11 +8,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 class OrderSuccessEvent extends Event
 {
 
-    private Orders $order;
-
-    public function __construct(Orders $order)
+    public function __construct(private Orders $order)
     {
-        $this->order = $order;
     }
 
     public function getOrder(): Orders

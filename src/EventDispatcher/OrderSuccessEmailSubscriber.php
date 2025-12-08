@@ -10,15 +10,12 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 class OrderSuccessEmailSubscriber implements EventSubscriberInterface
 {
-    protected $logger;
-    private Security $security;
-    private SendMailService $mail;
 
-    public function __construct(LoggerInterface $logger, Security $security, SendMailService $mail)
-    {
-        $this->logger = $logger;
-        $this->security = $security;
-        $this->mail = $mail;
+    public function __construct(
+        protected LoggerInterface $logger,
+        private Security $security,
+        private SendMailService $mail
+    ) {
     }
 
     public static function getSubscribedEvents(): array
@@ -37,8 +34,8 @@ class OrderSuccessEmailSubscriber implements EventSubscriberInterface
     public function sendSuccessEmail(OrderSuccessEvent $orderSuccessEvent)
     {
         // dd($orderSuccessEvent);
-        $user = $this->security->getUser();
-        if (!$user) {
+        $this->security->getUser();
+        if (!$user = $this->security->getUser()) {
             throw new \RuntimeException('Utilisateur non authentifié.');
         }
 

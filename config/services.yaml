@@ -17,22 +17,10 @@ services:
   # this creates a service per class whose id is the fully-qualified class name
   App\:
     resource: "../src/"
-    exclude:
-      # - "../src/Entity/"
-      - "../src/DependencyInjection/"
-      - "../src/Kernel.php"
+    exclude: '../src/{DependencyInjection,Entity,Kernel.php,Event}'
 
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones
-  App\Event\OrderSuccessEvent:
-    tags:
-      [
-        {
-          name: kernel.event_listener,
-          event: order.success,
-          method: getOrder,
-        },
-      ]
 
   # App\EventDispatcher\AddPrenomToAttributes:
   #   tags:

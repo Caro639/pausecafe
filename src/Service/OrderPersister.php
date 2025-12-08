@@ -11,31 +11,23 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class OrderPersister
 {
-    protected $em;
-
-    protected $cartService;
 
     public function __construct(
-        EntityManagerInterface $em,
-        CartService $cartService,
+        protected EntityManagerInterface $em,
+        protected CartService $cartService,
     ) {
-        $this->em = $em;
-        $this->cartService = $cartService;
     }
 
     public function persistOrder(
         Orders $order,
         SessionInterface $session,
-        EntityManagerInterface $em,
-        CartService $cartService,
         OrdersDetails $ordersDetails,
-        Products $product,
     ) {
 
         $panier = $session->get('panier', []);
 
-        $total = $cartService->getCart()['total'];
-        $product = $cartService->getCart()['data'];
+        $total = $this->cartService->getCart()['total'];
+        $this->cartService->getCart()['data'];
 
         foreach ($panier as $item => $quantity) {
             $ordersDetails = new OrdersDetails();
@@ -44,8 +36,8 @@ class OrderPersister
 
             $price = $product->getPrice();
             $name = $product->getName();
-            $total = $cartService->getCart()['total'];
-            $data = $cartService->getCart()['data'];
+            $total = $this->cartService->getCart()['total'];
+            $this->cartService->getCart()['data'];
 
             $ordersDetails->setProducts($product);
             $ordersDetails->setPrice($price);
@@ -55,12 +47,12 @@ class OrderPersister
 
             $order->addOrdersDetail($ordersDetails);
 
-            $em->persist($ordersDetails);
+            $this->em->persist($ordersDetails);
         }
         // dd($ordersDetails, $order);
         // dd($order);
-        $em->persist($order);
-        $em->flush();
+        $this->em->persist($order);
+        $this->em->flush();
 
         return $order;
     }
