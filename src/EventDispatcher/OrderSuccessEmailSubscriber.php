@@ -27,7 +27,6 @@ class OrderSuccessEmailSubscriber implements EventSubscriberInterface
 
     /**
      * Summary of sendSuccessEmail
-     * @param \App\Event\OrderSuccessEvent $orderSuccessEvent
      * @throws \RuntimeException
      * @return void
      */
@@ -35,7 +34,7 @@ class OrderSuccessEmailSubscriber implements EventSubscriberInterface
     {
         // dd($orderSuccessEvent);
         $this->security->getUser();
-        if (!$user = $this->security->getUser()) {
+        if (!($user = $this->security->getUser()) instanceof \Symfony\Component\Security\Core\User\UserInterface) {
             throw new \RuntimeException('Utilisateur non authentifié.');
         }
 

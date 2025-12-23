@@ -16,9 +16,6 @@ class SearchData
      */
     public $q = '';
 
-    /**
-     * @var Categories|null
-     */
     public ?Categories $category = null;
 
     /**

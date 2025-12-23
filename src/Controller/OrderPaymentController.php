@@ -30,7 +30,7 @@ final class OrderPaymentController extends AbstractController
 
         $total = $cartService->getCart()['total'];
 
-        $data = $cartService->getCart()['data'];
+        $cartService->getCart();
 
         $paymentIntent = $stripeService->getPaymentIntent(
             $cartService,

@@ -41,7 +41,7 @@ class CategoriesFixtures extends Fixture
         $category = new Categories();
         $category->setName($name);
         $category->setSlug($this->slugger->slug($category->getName())->lower());
-        if ($parent) {
+        if ($parent instanceof \App\Entity\Categories) {
             $category->setParent($parent);
         }
         $manager->persist($category);

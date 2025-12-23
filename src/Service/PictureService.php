@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PictureService
 {
-    private $params;
+    private \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $params;
 
     public function __construct(ParameterBagInterface $params)
     {

@@ -57,9 +57,7 @@ class Products
     /**
      * @var Collection<int, Images>
      */
-    #[ORM\OneToMany(targetEntity: Images::class, mappedBy: 'products',
-        orphanRemoval: true, cascade: ['persist']
-    )]
+    #[ORM\OneToMany(targetEntity: Images::class, mappedBy: 'products', cascade: ['persist'], orphanRemoval: true)]
     private Collection $images;
 
     /**
@@ -176,11 +174,9 @@ class Products
 
     public function removeImage(Images $image): static
     {
-        if ($this->images->removeElement($image)) {
-            // set the owning side to null (unless already changed)
-            if ($image->getProducts() === $this) {
-                $image->setProducts(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->images->removeElement($image) && $image->getProducts() === $this) {
+            $image->setProducts(null);
         }
 
         return $this;
@@ -206,11 +202,9 @@ class Products
 
     public function removeOrdersDetail(OrdersDetails $ordersDetail): static
     {
-        if ($this->ordersDetails->removeElement($ordersDetail)) {
-            // set the owning side to null (unless already changed)
-            if ($ordersDetail->getProducts() === $this) {
-                $ordersDetail->setProducts(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->ordersDetails->removeElement($ordersDetail) && $ordersDetail->getProducts() === $this) {
+            $ordersDetail->setProducts(null);
         }
 
         return $this;

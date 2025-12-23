@@ -14,7 +14,7 @@ class ProductsVoter extends Voter
     const EDIT = 'PRODUCT_EDIT';
     const DELETE = 'PRODUCT_DELETE';
 
-    private $security;
+    private \Symfony\Bundle\SecurityBundle\Security $security;
     public function __construct(Security $security)
     {
         $this->security = $security;
@@ -25,30 +25,29 @@ class ProductsVoter extends Voter
         if (!in_array($attribute, [self::EDIT, self::DELETE])) {
             return false;
         }
-        if (!$product instanceof Products) {
-            return false;
-        }
-        return true;
+        return $product instanceof Products;
     }
 
     protected function voteOnAttribute($attribute, mixed $product, TokenInterface $token): bool
     {
         $user = $token->getUser();
 
-        if (!$user instanceof UserInterface)
+        if (!$user instanceof UserInterface) {
             return false;
+        }
 
 
-        if ($this->security->isGranted('ROLE_ADMIN'))
+        if ($this->security->isGranted('ROLE_ADMIN')) {
             return true;
+        }
 
         return match ($attribute) {
-            self::EDIT => $this->canEdit($product, $user),
-            self::DELETE => $this->canDelete($product, $user),
+            self::EDIT => $this->canEdit(),
+            self::DELETE => $this->canDelete(),
             default => throw new \LogicException('This code should not be reached!'),
         };
     }
-    private function canEdit(Products $product, UserInterface $user): bool
+    private function canEdit(): bool
     {
         // if they can edit, they can delete
         // if ($this->canEdit($product, $user)) {
@@ -56,7 +55,7 @@ class ProductsVoter extends Voter
         // }
         return $this->security->isGranted('ROLE_PRODUCT_ADMIN');
     }
-    private function canDelete(Products $product, UserInterface $user): bool
+    private function canDelete(): bool
     {
         // if they can edit, they can delete
         // if ($this->canDelete($product, $user)) {

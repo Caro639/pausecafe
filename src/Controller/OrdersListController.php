@@ -14,11 +14,6 @@ final class OrdersListController extends AbstractController
 {
     /**
      * Affiche la liste des commandes de l'utilisateur connecté.
-     *
-     * @param User $user
-     * @param OrdersRepository $ordersRepository
-     * @param OrdersDetailsRepository $ordersDetailsRepository
-     * @return Response
      */
     #[Route('/orders/list/{id}', name: 'app_orders_list')]
     public function index(
@@ -31,7 +26,7 @@ final class OrdersListController extends AbstractController
 
         $user = $this->getUser();
 
-        if (!$user) {
+        if (!$user instanceof \Symfony\Component\Security\Core\User\UserInterface) {
             $this->addFlash('error', 'Aucune commande trouvée !');
             return $this->redirectToRoute('app_home');
         }

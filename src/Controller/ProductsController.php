@@ -38,7 +38,7 @@ final class ProductsController extends AbstractController
         // dd($request->attributes);
         $product = $repository->findOneBy(['slug' => $slug]);
 
-        if (!$product) {
+        if (!$product instanceof \App\Entity\Products) {
             throw $this->createNotFoundException('Produit non trouvé.');
         }
         // dd($product->getDescription());

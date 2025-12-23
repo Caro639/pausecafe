@@ -20,14 +20,6 @@ class RegistrationController extends AbstractController
 {
     /**
      * inscription de l'utilisateur plus envoie d'un mail de vérification
-     *
-     * @param Request $request
-     * @param UserPasswordHasherInterface $userPasswordHasher
-     * @param Security $security
-     * @param EntityManagerInterface $entityManager
-     * @param SendMailService $mail
-     * @param JWTService $jwt
-     * @return Response
      */
     #[Route('/inscription', name: 'app_register')]
     public function register(
@@ -143,11 +135,6 @@ class RegistrationController extends AbstractController
 
     /**
      * renvoie de l'email de vérification à la demande de l'utilisateur
-     *
-     * @param JWTService $jwt
-     * @param SendMailService $mail
-     * @param UserRepository $userRepository
-     * @return Response
      */
     #[Route('/renvoiverif', name: 'resend_verif')]
     public function resendVerif(
@@ -157,7 +144,7 @@ class RegistrationController extends AbstractController
     ): Response {
         $user = $this->getUser();
 
-        if (!$user) {
+        if (!$user instanceof \Symfony\Component\Security\Core\User\UserInterface) {
             $this->addFlash(
                 'danger',
                 'Vous devez être connecté pour accéder à cette page.'

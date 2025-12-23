@@ -59,7 +59,7 @@ final class OrdersController extends AbstractController
 
         $user = $this->getUser();
         // si form rempli et valid enregistr
-        if ($formOrder->isSubmitted() && $formOrder->isValid()) {
+        if ($formOrder->isValid()) {
 
             $formOrder->getData();
             $lastname = $formOrder->get('lastname')->getData();
@@ -71,7 +71,7 @@ final class OrdersController extends AbstractController
             // enregistre bdd
             $order = new Orders();
 
-            $cartService->getCart()['data'];
+            $cartService->getCart();
 
             $ordertotal = $cartService->getCart()['total'];
 
@@ -80,8 +80,6 @@ final class OrdersController extends AbstractController
 
             // $order->setPromo($promo);
             $order->setUser($user);
-
-            $reference = $createdAt = new \DateTimeImmutable();
             $reference = $createdAt->format('dmY') . '-' . uniqid();
             $order->setReference(uniqid($reference));
             $order->setCreatedAt($createdAt);

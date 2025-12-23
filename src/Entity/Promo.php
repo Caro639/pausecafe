@@ -163,11 +163,9 @@ class Promo
 
     public function removeOrder(Orders $order): static
     {
-        if ($this->orders->removeElement($order)) {
-            // set the owning side to null (unless already changed)
-            if ($order->getPromo() === $this) {
-                $order->setPromo(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->orders->removeElement($order) && $order->getPromo() === $this) {
+            $order->setPromo(null);
         }
 
         return $this;

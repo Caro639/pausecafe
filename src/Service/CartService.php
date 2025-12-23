@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartService
 {
-    private RequestStack $request;
     private SessionInterface $session;
 
     protected ProductsRepository $productsRepository;
@@ -105,7 +104,7 @@ class CartService
 
         foreach ($panier as $id => $quantity) {
             $product = $this->productsRepository->find($id);
-            if ($product) {
+            if ($product instanceof \App\Entity\Products) {
                 $totalQuantity += $quantity;
             }
         }

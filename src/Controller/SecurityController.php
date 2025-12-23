@@ -20,9 +20,6 @@ class SecurityController extends AbstractController
 {
     /**
      * se connecter
-     *
-     * @param AuthenticationUtils $authenticationUtils
-     * @return Response
      */
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
@@ -50,13 +47,6 @@ class SecurityController extends AbstractController
 
     /**
      * demande de réinitialisation de mot de passe
-     *
-     * @param Request $request
-     * @param UserRepository $userRepository
-     * @param TokenGeneratorInterface $tokenGeneratorInterface
-     * @param EntityManagerInterface $manager
-     * @param SendMailService $mail
-     * @return Response
      */
     #[Route(path: '/oubli-pass', name: 'forgotten_password')]
     public function forgottenPassword(
@@ -82,7 +72,7 @@ class SecurityController extends AbstractController
                     'token' => $token,
                 ], UrlGeneratorInterface::ABSOLUTE_URL);
                 // dd($url);
-                $context = compact('url', 'user');
+                $context = ['url' => $url, 'user' => $user];
 
                 $mail->send(
                     'no-reply@pausecafe.fr',

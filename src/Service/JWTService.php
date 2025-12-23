@@ -8,11 +8,6 @@ class JWTService
 {
     /**
      * JWT Token generator
-     * @param array $header
-     * @param array $payload
-     * @param string $secret
-     * @param int $validity
-     * @return string
      */
     public function generate(
         array $header,

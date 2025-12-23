@@ -27,7 +27,7 @@ class OrderPersister
         $panier = $session->get('panier', []);
 
         $total = $this->cartService->getCart()['total'];
-        $this->cartService->getCart()['data'];
+        $this->cartService->getCart();
 
         foreach ($panier as $item => $quantity) {
             $ordersDetails = new OrdersDetails();
@@ -37,7 +37,7 @@ class OrderPersister
             $price = $product->getPrice();
             $name = $product->getName();
             $total = $this->cartService->getCart()['total'];
-            $this->cartService->getCart()['data'];
+            $this->cartService->getCart();
 
             $ordersDetails->setProducts($product);
             $ordersDetails->setPrice($price);

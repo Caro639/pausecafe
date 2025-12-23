@@ -30,7 +30,7 @@ final class CategoriesController extends AbstractController
     ): Response {
         $category = $repository->findOneBy(['slug' => $slug]);
 
-        if (!$category) {
+        if (!$category instanceof \App\Entity\Categories) {
             throw $this->createNotFoundException('Catégorie non trouvée.');
         }
 
@@ -40,6 +40,6 @@ final class CategoriesController extends AbstractController
 
         $products = $productsRepository->findProductsPaginated($page, $category->getSlug(), 1);
 
-        return $this->render('categories/list.html.twig', compact('category', 'products'));
+        return $this->render('categories/list.html.twig', ['category' => $category, 'products' => $products]);
     }
 }

@@ -29,14 +29,11 @@ final class ProfileController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $user = $this->getUser();
-        if ($user === null) {
+        if (!$user instanceof \Symfony\Component\Security\Core\User\UserInterface) {
             return $this->redirectToRoute('app_login');
         }
         // $user = $userRepository->findOneBy(['id' => $user->getId()]);
         $userId = $this->userRepository->findOneBy(['id' => $id]);
-        if ($user === null) {
-            throw $this->createNotFoundException('Utilisateur non trouvé.');
-        }
 
         return $this->render('profile/index.html.twig', [
             // 'user' => $userRepository->findOneBy(['id' => $user->getId()]),

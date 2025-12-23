@@ -37,8 +37,7 @@ class Orders
     /**
      * @var Collection<int, OrdersDetails>
      */
-    #[ORM\OneToMany(targetEntity: OrdersDetails::class,
-        mappedBy: 'orders', orphanRemoval: true, cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: OrdersDetails::class, mappedBy: 'orders', cascade: ['persist'], orphanRemoval: true)]
     private Collection $ordersDetails;
 
     #[ORM\Column(length: 100)]
@@ -126,11 +125,9 @@ class Orders
 
     public function removeOrdersDetail(OrdersDetails $ordersDetail): static
     {
-        if ($this->ordersDetails->removeElement($ordersDetail)) {
-            // set the owning side to null (unless already changed)
-            if ($ordersDetail->getOrders() === $this) {
-                $ordersDetail->setOrders(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->ordersDetails->removeElement($ordersDetail) && $ordersDetail->getOrders() === $this) {
+            $ordersDetail->setOrders(null);
         }
 
         return $this;

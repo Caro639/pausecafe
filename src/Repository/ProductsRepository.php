@@ -88,7 +88,7 @@ class ProductsRepository extends ServiceEntityRepository
                 ->andWhere('p.promo = 1');
         }
 
-        if (!empty($search->category)) {
+        if ($search->category instanceof \App\Entity\Categories) {
             $query = $query
                 ->andWhere('c.id IN (:category)')
                 ->setParameter('category', $search->category);

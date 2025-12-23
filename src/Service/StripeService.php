@@ -44,7 +44,7 @@ class StripeService
                 ],
             ]);
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            throw new \RuntimeException('Erreur lors de la création du PaymentIntent : ' . $e->getMessage());
+            throw new \RuntimeException('Erreur lors de la création du PaymentIntent : ' . $e->getMessage(), $e->getCode(), $e);
         }
     }
 }

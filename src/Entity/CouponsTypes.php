@@ -66,11 +66,9 @@ class CouponsTypes
 
     public function removePromo(Promo $promo): static
     {
-        if ($this->promos->removeElement($promo)) {
-            // set the owning side to null (unless already changed)
-            if ($promo->getCouponsTypes() === $this) {
-                $promo->setCouponsTypes(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->promos->removeElement($promo) && $promo->getCouponsTypes() === $this) {
+            $promo->setCouponsTypes(null);
         }
 
         return $this;

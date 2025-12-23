@@ -16,9 +16,6 @@ final class CartController extends AbstractController
     /**
      * affiche le panier
      *
-     * 
-     * @param CartService $cartService
-     * @return Response
      */
     #[Route('/', name: 'index.cart', methods: ['GET', 'POST'])]
     public function index(
@@ -28,7 +25,7 @@ final class CartController extends AbstractController
         $data = $cartService->getCart()['data'];
         $total = $cartService->getCart()['total'];
 
-        $formOrder = $this->createForm(OrderComfirmType::class, null);
+        $formOrder = $this->createForm(OrderComfirmType::class);
 
         return $this->render('cart/index.html.twig', [
             'data' => $data,

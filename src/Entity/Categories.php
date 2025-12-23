@@ -118,11 +118,9 @@ class Categories
 
     public function removeCategory(self $category): static
     {
-        if ($this->categories->removeElement($category)) {
-            // set the owning side to null (unless already changed)
-            if ($category->getParent() === $this) {
-                $category->setParent(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->categories->removeElement($category) && $category->getParent() === $this) {
+            $category->setParent(null);
         }
 
         return $this;
@@ -148,11 +146,9 @@ class Categories
 
     public function removeProduct(Products $product): static
     {
-        if ($this->products->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getCategories() === $this) {
-                $product->setCategories(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->products->removeElement($product) && $product->getCategories() === $this) {
+            $product->setCategories(null);
         }
 
         return $this;

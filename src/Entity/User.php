@@ -268,11 +268,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeOrder(Orders $order): static
     {
-        if ($this->orders->removeElement($order)) {
-            // set the owning side to null (unless already changed)
-            if ($order->getUser() === $this) {
-                $order->setUser(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->orders->removeElement($order) && $order->getUser() === $this) {
+            $order->setUser(null);
         }
 
         return $this;
